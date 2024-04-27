@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Home Page</title>
+    <link rel="stylesheet" href="styles.css"> <!-- Include CSS file -->
+    <style>  
+    /* styles.css */
+
+        .container {
+            display: flex;
+            flex-wrap: wrap;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); /* Create a grid with columns that automatically fill the available space */
+            justify-content: center;
+            gap: 20px;
+        }
+
+        .tile {
+            width: 100px; /* Adjust the width of each tile */
+            height: 100px; /* Adjust the height of each tile */
+            margin-top: 50px;
+            margin-left:10px;
+            margin-right: 10px;
+        }
+
+        .tile img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover; /* Ensure the image covers the entire tile */
+        }
+
+        .tile a {
+            text-decoration: none; /* Remove underline from the hyperlink */
+        }
+        .tile p {
+            font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif; /* Set the font family */
+            font-size: 20px; /* Set the font size */
+            margin-top: 0px; /* Add some space between the image and text */
+            text-align: center;
+            text-decoration: none;
+            color: rgb(29, 29, 29);
+        }
+
+        h1, h2, h3 {
+            font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif; /* Set the font family for all header elements */
+            font-size: 30px; /* Set the font size */
+            margin-top: 10px; /* Add some space between the image and text */
+            text-align: center;
+            color: rgb(29, 29, 29);
+        }
+    </style>
+</head>
+<body>
+    <div class="top-ribbon">
+        <div class="logo">
+          <img src="logo_orange-removebg-preview.png" alt="Logo"> <!-- Replace 'logo.png' with the path to your logo image -->
+        </div>
+        <div class="title">
+          The Board <!-- Title next to the logo -->
+        </div>
+        <ul class="menu-links">
+          <li><a href="home.html">Home</a></li> <!-- Replace '#' with the link to the Home page -->
+          <li><a href="board.html">The Board</a></li> <!-- Replace '#' with the link to The Board page -->
+          <li><a href="designgallery.html">Design Gallery</a></li> <!-- Replace '#' with the link to the Design Gallery page -->
+          <li><a href="blog.html">Crafters Blog</a></li> <!-- Replace '#' with the link to the Crafters Blog page -->
+        </ul>
+        <div class="menu-icon">
+          <img src="menu-icon.png" alt="Menu"> <!-- Replace 'menu-icon.png' with the path to your menu icon image -->
+        </div>
+      </div>
+
+    
+    <div class="container">
+        
+        <div class="tile">
+            <a href="tictactoe/tictactoe.html"><img src="icon/tic.jpg" alt="Tictactoe"><p>Tic Tac Toe</p></a>
+
+        </div>
+        <div class="tile">
+            <a href="chess/chess.html"><img src="icon/chess.jpg" alt="Chess"><p>Chess</p></a>
+        </div>
+        <div class="tile">
+            <a href="chessboardjs/Chess_m2.html"><img src="icon/chess.jpg" alt="Chess JS"><p>Chess JS</p></a>
+        </div>
+        <div class="tile">
+            <a href="tictactoepp/tictactoepp.html"><img src="icon/daaDi.jpg" alt="daaDi"><p>TicTacToe ++</p></a>
+        </div>
+        <div class="tile">
+            <a href="sudoku/sudoku.html"><img src="icon/sudoku.jpg" alt="Sudoku"><p>Sudoku</p></a>
+        </div>
+        <div class="tile">
+            <a href="arithmo/arithmo.html"><img src="icon/arithmo.png" alt="Arithmo"><p>Arithmo</p></a>
+        </div>
+        <div class="tile">
+            <a href="arithmo/arithmo.html"><img src="icon/checkers.png" alt="Checkers"><p>Checkers</p></a>
+        </div>
+        <div class="tile">
+            <a href="arithmo/arithmo.html"><img src="icon/go.png" alt="Go"><p>Go</p></a>
+        </div>
+        <div class="tile">
+            <a href="arithmo/arithmo.html"><img src="icon/reversi.png" alt="Reversi"><p>Reversi</p></a>
+        </div>
+        <div class="tile">
+            <a href="arithmo/arithmo.html"><img src="icon/backgammon.png" alt="BackGammon"><p>BackGammon</p></a>
+        </div>
+        <div class="tile">
+            <a href="arithmo/arithmo.html"><img src="icon/scrabble.jpg" alt="Scrabble"><p>Scrabble</p></a>
+        </div>
+        <div class="tile">
+            <a href="arithmo/arithmo.html"><img src="icon/crossword.jpg" alt="Crossword"><p>Crossword</p></a>
+        </div>
+        <div class="tile">
+            <a href="arithmo/arithmo.html"><img src="icon/hangman.jpg" alt="Hangman"><p>Hangman</p></a>
+        </div>
+        <div class="tile">
+            <a href="arithmo/arithmo.html"><img src="icon/scramble.png" alt="Scramble"><p>Scramble</p></a>
+        </div>
+        <div class="tile">
+            <a href="arithmo/arithmo.html"><img src="icon/blockus.jpg" alt="Blockus"><p>Blockus</p></a>
+        </div>
+        <div class="tile">
+            <a href="arithmo/arithmo.html"><img src="icon/battleship.jpg" alt="Battleship"><p>Battleship</p></a>
+        </div>
+        <div class="tile">
+            <a href="arithmo/arithmo.html"><img src="icon/puzzle.jpg" alt="Puzzle"><p>Puzzle</p></a>
+        </div>
+        <div class="tile">
+            <a href="arithmo/arithmo.html"><img src="icon/abalone.jpeg" alt="Abalone"><p>Abalone</p></a>
+        </div>
+        <div class="tile">
+            <a href="arithmo/arithmo.html"><img src="icon/9menmorris.png" alt="Nine Men Morris"><p>Nine Men Morris</p></a>
+        </div>
+        <div class="tile">
+            <a href="arithmo/arithmo.html"><img src="icon/Dotsandlines.jpg" alt="Dots and Lines"><p>Dots and Lines</p></a>
+        </div>
+        <div class="tile">
+            <a href="arithmo/arithmo.html"><img src="icon/Ur.jpg" alt="The Royal Game of Ur"><p>The Royal Game of Ur</p></a>
+        </div>
+        <div class="tile">
+            <a href="arithmo/arithmo.html"><img src="icon/Senet.jpg" alt="Senet"><p>Senet</p></a>
+        </div>
+        <div class="tile">
+            <a href="arithmo/arithmo.html"><img src="icon/quaridor.png" alt="Quaridor"><p>Quaridor</p></a>
+        </div>
+        <div class="tile">
+            <a href="arithmo/arithmo.html"><img src="icon/maze.jpg" alt="Maze"><p>Maze</p></a>
+        </div>
+        <div class="tile">
+            <a href="arithmo/arithmo.html"><img src="icon/fox-geese.png" alt="FoxNGeese"><p>FoxNGeese</p></a>
+        </div>
+        <div class="tile">
+            <a href="arithmo/arithmo.html"><img src="icon/ludus.jpeg" alt="Ludus"><p>Ludus</p></a>
+        </div>
+        <div class="tile">
+            <a href="arithmo/arithmo.html"><img src="icon/surakarta1.jpeg" alt="Surakarta"><p>Surakarta</p></a>
+        </div>
+        <div class="tile">
+            <a href="arithmo/arithmo.html"><img src="icon/puliMeka1.jpg" alt="Goats & Tigers"><p>Goats & Tigers</p></a>
+        </div>
+        <div class="tile">
+            <a href="arithmo/arithmo.html"><img src="icon/irish-brandubuh.jpg" alt="Irish Brandubuh"><p>Irish Brandubuh</p></a>
+        </div>
+        <div class="tile">
+            <a href="arithmo/arithmo.html"><img src="icon/tawlbrdd.png" alt="Welsh Tawlbrdd"><p>Welsh Tawlbrdd</p></a>
+        </div>
+        <div class="tile">
+            <a href="arithmo/arithmo.html"><img src="icon/bagh chal.jpg" alt="Bagh Chal"><p>Bagh Chal</p></a>
+        </div>
+        <div class="tile">
+            <a href="arithmo/arithmo.html"><img src="icon/alquerque.jpeg" alt="Alquerque"><p>Alquerque</p></a>
+        </div>
+        <div class="tile">
+            <a href="arithmo/arithmo.html"><img src="icon/Ludii.png" alt="Ludii"><p>Ludii</p></a>
+        </div>
+        <div class="tile">
+            <a href="arithmo/arithmo.html"><img src="icon/fanorona.jpeg" alt="Fanorona"><p>Fanorona</p></a>
+        </div>
+        <div class="tile">
+            <a href="arithmo/arithmo.html"><img src="icon/fightingSerpants.jpg" alt="Fighting Serpants"><p>Fighting Serpants</p></a>
+        </div>
+        <div class="tile">
+            <a href="arithmo/arithmo.html"><img src="icon/agon.jpg" alt="Agon"><p>Agon</p></a>
+        </div>
+        <div class="tile">
+            <a href="arithmo/arithmo.html"><img src="icon/hnefatafl.jpg" alt="Hnefatafl"><p>Hnefatafl</p></a>
+        </div>
+        <div class="tile">
+            <a href="arithmo/arithmo.html"><img src="icon/quantik.jpg" alt="Quantik"><p>Quantik</p></a>
+        </div>
+        <div class="tile">
+            <a href="arithmo/arithmo.html"><img src="icon/halma.jpg" alt="Halma"><p>Halma</p></a>
+        </div>
+        <div class="tile">
+            <a href="arithmo/arithmo.html"><img src="icon/chineseCheckers.png" alt="Chinese Checkers"><p>Chinese Checkers</p></a>
+        </div>
+        <div class="tile">
+            <a href="arithmo/arithmo.html"><img src="icon/ludo.png" alt="Ludo"><p>Ludo</p></a>
+        </div>
+        <div class="tile">
+            <a href="arithmo/arithmo.html"><img src="icon/solitair.png" alt="Solitair"><p>Solitair</p></a>
+        </div>
+        <!-- Add more tiles as needed -->
+    </div>
+</body>
+</html>
