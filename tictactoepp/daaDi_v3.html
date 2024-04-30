@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TicTacToe++</title>
+    <style>
+        
+        #board {
+            display: grid;
+            grid-template-columns: repeat(3, 150px);
+            grid-template-rows: repeat(3, 150px);
+            gap: 2px;
+            /*justify-content: center;*/
+        }
+        .cell {
+            width: 150px;
+            height: 150px;
+            border: 1px solid black;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 3em;
+        }
+        .selected {
+            background-color: rgb(5, 89, 167);
+            color: white;
+        }
+        #message {
+            margin-top: 20px;
+            font-size: 1.5em;
+            font-weight: bold;
+            justify-content: center;
+        }
+        button {
+            width: 150px; /* Set the width of the button */
+            height: 30px; /* Set the height of the button */
+            border-radius: 5px; /* Set the border radius to make the button rounded */
+            padding: 0px 20px; /* Set the padding inside the button (top/bottom, left/right) */
+            font-size: 16px; /* Set the font size of the button text */
+            background-color: #5e5f5e; /* Set the background color of the button */
+            color: white; /* Set the text color of the button */
+            border: none; /* Remove the default button border */
+            cursor: pointer; /* Change the cursor to a pointer when hovering over the button */
+            outline: none; /* Remove the default focus outline */
+        }
+    </style>
+</head>
+<body>
+    <h1>TicTacToe++</h1>
+    <div id="board">
+        <div class="cell" data-index="0"></div>
+        <div class="cell" data-index="1"></div>
+        <div class="cell" data-index="2"></div>
+        <div class="cell" data-index="3"></div>
+        <div class="cell" data-index="4"></div>
+        <div class="cell" data-index="5"></div>
+        <div class="cell" data-index="6"></div>
+        <div class="cell" data-index="7"></div>
+        <div class="cell" data-index="8"></div>
+    </div>
+    <br><br>
+    <button id="restartBtn">Restart Game</button>
+    <br>
+    <div id="message"></div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const board = document.getElementById('board');
+            const restartBtn = document.getElementById('restartBtn');
+            const messageElement = document.getElementById('message');
+            let currentPlayer = 'X';
+            let moves = 0;
+            let playerXCount = 0;
+            let playerOCount = 0;
+            let selectedCell = null;
+
+            board.addEventListener('click', handleCellClick);
+            restartBtn.addEventListener('click', restartGame);
+
+            function handleCellClick(e) {
+                const cell = e.target;
+                if (!cell.classList.contains('cell')) return;
+
+                if (moves < 6) {
+                    if (cell.textContent === '') {
+                        cell.textContent = currentPlayer;
+                        moves++;
+                        currentPlayer = currentPlayer === 'X' ? 'O' : 'X';
+                        if (cell.textContent === 'X') {
+                            playerXCount++;
+                        } else {
+                            playerOCount++;
+                        }
+                        checkWin(); // Check for win after initial placement
+                    }
+                } else {
+                    if (selectedCell) {
+                        const selectedCellIndex = parseInt(selectedCell.dataset.index);
+                        const cellIndex = parseInt(cell.dataset.index);
+                        const adjacentCells = getAdjacentCells(selectedCellIndex);
+                        if (adjacentCells.includes(cellIndex) && cell.textContent === '') {
+                            if (selectedCell.textContent === currentPlayer) {
+                                cell.textContent = selectedCell.textContent;
+                                selectedCell.textContent = '';
+                                moves++;
+                                currentPlayer = currentPlayer === 'X' ? 'O' : 'X';
+                                checkWin();
+                                
+                                //displayPlayerTurn(); // Display initial player's turn
+                            } else {
+                                cell.classList.add('invalid-move');
+                                setTimeout(() => {
+                                    cell.classList.remove('invalid-move');
+                                }, 1000);
+                                
+                            }
+                        }
+                        selectedCell.classList.remove('selected');
+                        selectedCell = null;
+                    } else if (cell.textContent !== '') {
+                        if (cell.textContent === currentPlayer) {
+                            selectedCell = cell;
+                            cell.classList.add('selected');
+                            //displayPlayerTurn(); // Display initial player's turn
+                        }
+                    }
+                }
+                
+            }
+            function getAdjacentCells(index) {
+                const row = Math.floor(index / 3);
+                const col = index % 3;
+                const adjacentCells = [];
+                for (let i = Math.max(0, row - 1); i <= Math.min(2, row + 1); i++) {
+                    for (let j = Math.max(0, col - 1); j <= Math.min(2, col + 1); j++) {
+                        const adjIndex = i * 3 + j;
+                        if (adjIndex !== index && document.querySelector(`[data-index="${adjIndex}"]`).textContent === '' ) {
+                            adjacentCells.push(adjIndex);
+                        }
+                    }
+                }
+                return adjacentCells;
+            }
+
+            function restartGame() {
+                const cells = document.querySelectorAll('.cell');
+                for (let cell of cells) {
+                    cell.textContent = '';
+                    cell.classList.remove('selected'); // Clear the 'selected' class
+                }
+                currentPlayer = 'X';
+                moves = 0;
+                playerXCount = 0;
+                playerOCount = 0;
+                selectedCell = null;
+                messageElement.textContent = '';
+                board.addEventListener('click', handleCellClick);
+            }
+
+            function checkWin() {
+                const cells = document.querySelectorAll('.cell');
+                const lines = [
+                    [0, 1, 2],
+                    [3, 4, 5],
+                    [6, 7, 8],
+                    [0, 3, 6],
+                    [1, 4, 7],
+                    [2, 5, 8],
+                    [0, 4, 8],
+                    [2, 4, 6]
+                ];
+                for (let line of lines) {
+                    const [a, b, c] = line;
+                    if (cells[a].textContent && cells[a].textContent === cells[b].textContent && cells[a].textContent === cells[c].textContent) {
+                        messageElement.textContent = `Player ${cells[a].textContent} wins!`;
+                        board.removeEventListener('click', handleCellClick);
+                        break;
+                    } else{
+                        displayPlayerTurn(); // Display initial player's turn
+                    }
+                }
+            }
+
+            function displayPlayerTurn() {
+                messageElement.textContent = `Player ${currentPlayer}'s turn`;
+            }
+
+            
+        });
+    </script>
+</body>
+</html>

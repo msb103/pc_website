@@ -1,0 +1,44 @@
+.board {
+    width: 400px;
+    height: 400px;
+    display: flex;
+    flex-wrap: wrap;
+    border: 2px solid black;
+}
+
+.cell {
+    width: calc(100% / 8);
+    height: calc(100% / 8);
+    box-sizing: border-box;
+    border: 1px solid black;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 24px;
+    cursor: pointer;
+}
+
+.white {
+    background-color: #f0d9b5;
+}
+
+.black {
+    background-color: #b58863;
+}
+
+.selected {
+    border: 2px solid blue;
+}
+
+.piece {
+    font-family: Arial, sans-serif;
+}
+
+.controls {
+    margin-top: 10px;
+    text-align: center;
+}
+
+button {
+    margin: 0 5px;
+}

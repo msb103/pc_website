@@ -1,0 +1,103 @@
+jQuery(function ($) {
+
+    function ajaxRequest(data) {
+        $.ajax({
+            url: blog_ajax_obj.ajaxurl,
+            type: 'POST',
+            data: data,
+            success: function (response) {
+                $('.search-input').attr('data-first', 'false');
+                $('.blog-list-left').empty().append(response);
+                $('html, body').animate({
+                    scrollTop: $(".blog-list-left").offset().top -100
+                }, 1000);
+            },
+            error: function (errorThrown) {
+                console.log(errorThrown);
+            }
+        });
+    }
+
+    // Pagination click handling
+    $('body').on('click', '.pagination_link', function (e) {
+        e.preventDefault();
+        var page = $(this).attr('value');
+        var name = $(this).attr('name');
+        var searchTerm = $(this).attr('data-keyword');
+        var selectedTag = $(this).data('tag');
+        var selectedIn = $(this).data('industry');
+        var selectedCat = $(this).data('cat');
+
+        $('.pagination_link').removeClass("active");
+        $(this).toggleClass("active");
+
+        ajaxRequest({
+            'action': 'ajax_pagination',
+            'page': page,
+            'name': name,
+            'search_query': searchTerm,
+            'selectedTag': selectedTag,
+            'selectedIn': selectedIn,
+            'selectedCat': selectedCat,
+            'nonce': blog_ajax_obj.nonce
+        });
+    });
+
+    // Search handling
+    $('.search-btn').on('click', function (e) {
+        e.preventDefault();
+        var name = $('.search-input').data('tag');
+        var first = $('.search-input').data('first');
+        if (first == 'true') {
+            // Additional logic for the first search if needed
+        }
+        var searchTerm = $('.search-input').val();
+
+        ajaxRequest({
+            'action': 'ajax_pagination',
+            'search_query': searchTerm,
+            'name': name,
+            'page': 1,
+            'nonce': blog_ajax_obj.nonce
+        });
+    });
+
+    // Search input Enter key press handling
+    $('.search-input').on('keypress', function (e) {
+        if (e.which === 13) {
+            var name = $(this).data('tag');
+            var first = $(this).data('first');
+            if (first == 'true') {
+                // Additional logic for the first search if needed
+            }
+            var searchTerm = $(this).val();
+
+            ajaxRequest({
+                'action': 'ajax_pagination',
+                'search_query': searchTerm,
+                'name': name,
+                'page': 1,
+                'nonce': blog_ajax_obj.nonce
+            });
+        }
+    });
+
+    // Tag, category, and industry click handling
+    $('.tag-link, .cat-link, .industry-link').on('click', function (e) {
+        e.preventDefault();
+        var selectedTag = $(this).data('tag');
+        var selectedCat = $(this).data('cat');
+        var selectedIn = $(this).data('industry');
+        var name = $(this).attr('name');
+
+        ajaxRequest({
+            'action': 'ajax_pagination',
+            'selectedTag': selectedTag,
+            'selectedCat': selectedCat,
+            'selectedIn': selectedIn,
+            'name': name,
+            'page': 1,
+            'nonce': blog_ajax_obj.nonce
+        });
+    });
+});

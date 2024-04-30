@@ -1,0 +1,181 @@
+.container {
+    /*margin: 20px;*/
+    display: grid;
+    grid-template-columns: 70% 30%;
+    /*grid-template-columns: repeat(2, auto); /* Adjust the number of columns as needed */
+    grid-template-rows: flex; /* Adjust as needed */
+    gap: 10px;
+    border : 5px red;
+
+}
+
+.menu {
+    margin: 0px;   
+    margin-bottom: 10px;
+
+}
+
+label {
+    margin-right: 0px;
+}
+
+.grid-container {
+    margin-top: 10px;
+    margin-right: 10px;
+    /*margin-bottom: 20px; */
+
+    display: flex;
+    
+
+    grid-column: 1 / 2; /* Place the gridContainer in the first column */
+    grid-row: span 1; /* Span 3 rows to align with the other elements */
+    justify-content: right;
+    border : 5px red;
+}
+
+.grid-top {
+    margin-top: 0px;
+    margin-right: 10px;
+    display: flex;
+    grid-column: 1 / 2; /* Place the gridContainer in the first column */
+    /*grid-row: span 1; /* Span 3 rows to align with the other elements */
+    justify-content: right;
+    
+}
+
+.grid-bottom {
+    margin-top: 20px;
+    margin-right: 10px;
+    display: flex;
+    grid-column: 1 / 2; /* Place the gridContainer in the first column */
+    grid-row: span 1; /* Span 3 rows to align with the other elements */
+    justify-content: right;
+    border : 5px green;
+}
+
+.grid-side {
+    margin-top: 10px;
+    margin-left: 10px;
+    display: flex;
+    grid-column: 2/3 ; /* Place the gridSide in the third column */
+    grid-row: 2 / span 1; /* Span 3 rows to align with the other elements */
+    justify-content: left;
+    
+}
+
+.grid {
+    display: grid;
+    gap: 5px;
+    /* border: 1px solid #ccc; */
+    padding: 5px;
+    width: fit-content; /* Adjust width based on content */
+}
+
+.cell {
+    background-color: #ffffff;
+    border: 1px solid #ccc;
+    text-align: center;
+    line-height: 50px;
+    width: 50px; /* Set width of cell */
+    height: 50px; /* Set height of cell */
+}
+
+.slider-container {
+    margin-top: 20px;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+}
+
+.slider-container input[type="range"] {
+    width: 100%;
+}
+
+
+
+.cell-top {
+    background-color: #ccc;
+    border: 1px solid #ccc;
+    text-align: center;
+    line-height: 50px;
+    width: 50px; /* Set width of cell */
+    height: 50px; /* Set height of cell */
+}
+
+/* Define styles for selected class */
+.selected {
+    /*border: 2px solid rgb(255, 30, 0); /* Change border color or add any other visual indication */
+    background-color: rgb(253, 253, 253);
+    color: black;
+    font-weight : bold;
+    font-size: 30px;
+    border : 2px solid black;
+    /* Add any other styling for selected state */
+}
+
+.selected2 {
+    /*border: 2px solid rgb(255, 30, 0); /* Change border color or add any other visual indication */
+    background-color: rgb(250, 248, 248);
+    color: rgb(41, 41, 41);
+    /* Add any other styling for selected state */
+}
+
+.selected3 {
+    border: 2px solid rgb(255, 30, 0); /* Change border color or add any other visual indication */
+    /*background-color: rgb(250, 248, 248);
+    color: rgb(41, 41, 41);
+    /* Add any other styling for selected state */
+}
+
+#message {
+    margin-top: 20px;
+    font-size: 1.5em;
+    font-weight: bold;
+    justify-content: center;
+}
+
+#message.player1 {
+    margin-top: 5px;
+    font-size: 1.5em;
+    font-weight: bold;
+    justify-content: center;
+    color : rgb(161, 161, 161));
+}
+
+#message.player2 {
+    margin-top: 5px;
+    font-size: 1.5em;
+    font-weight: bold;
+    justify-content: center;
+    color : rgb(41, 41, 41);
+}
+
+
+#player1Score {
+    margin-top: 5px;
+    font-size: 1.5em;
+    font-weight: bold;
+    justify-content: center;
+    color: rgb(161, 161, 161);
+}
+#player2Score {
+    margin-top: 5px;
+    font-size: 1.5em;
+    font-weight: bold;
+    justify-content: center;
+    color: rgb(41, 41, 41);
+}
+
+.selected-player1 {
+    background-color: rgb(161, 161, 161);
+    font-weight : bold;
+    font-size: 30px;
+    
+}
+
+.selected-player2 {
+    background-color: rgb(41, 41, 41);
+    font-weight : bold;
+    font-size: 30px;
+    color : white;
+}
