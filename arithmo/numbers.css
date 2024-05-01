@@ -6,6 +6,7 @@
     grid-template-rows: flex; /* Adjust as needed */
     gap: 10px;
     border : 5px red;
+    margin-top:70px;
 
 }
 
@@ -20,7 +21,7 @@ label {
 }
 
 .grid-container {
-    margin-top: 10px;
+    margin-top: 70px;
     margin-right: 10px;
     /*margin-bottom: 20px; */
 
