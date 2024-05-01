@@ -14,7 +14,7 @@ navbar.innerHTML = `
     </div>
     <div class="menu-container">
       <ul class="menu-links">
-        <li><a href="${rootPath}index.html">Home |</a></li> <!-- Replace '#' with the link to the Home page -->
+        <li><a href="index.html">Home |</a></li> <!-- Replace '#' with the link to the Home page -->
         <!--li><a href="board.html">The Board  |</a></li> <!-- Replace '#' with the link to The Board page -->
         <li><a href="designgallery.html">Design Gallery |</a></li> <!-- Replace '#' with the link to the Design Gallery page -->
         <li><a href="blog.html">Crafter's Blog  |</a></li> <!-- Replace '#' with the link to the Crafters Blog page -->
