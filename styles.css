@@ -154,37 +154,53 @@ font-size:1em;
 
 .banner-section {
   position: relative;
-    width: 100%;
-    height: 400px; /* Set the height of the banner section */
-    padding-top: 20px;
-    margin-top:20px;
-    display: flex;
-    justify-content: center; /* Center the banner horizontally */
-    align-items: center; /* Center the banner vertically */
-    margin-bottom:10px;
-    
+  width:calc(120%);
+  height: 450px; /* Set the height of the banner section */
+  display: flex;
+  justify-content: center; /* Center the banner horizontally */
+  align-items: center; /* Center the banner vertically */
+  margin-bottom:0px;
+  background-color:black;
+  margin-left:-20px;
+  border-radius:20px;
+  margin-right:-20px;
   }
+
 .banner {
-    width: 100%; 
-    height: 60%; 
-    display: flex; 
-    justify-content: center; 
-    align-items: center; 
-    overflow: hidden; 
-    position: relative;
-    padding-bottom: 25px;
-    padding-top: 15px;
-    background-color:#0C1622;
-    border-radius: 10px;
+
+  width:auto;
+  height:auto;
+  position: relative;
+  display: flex; 
+  flex-shrink:1;
+  justify-content: center; 
+  align-items: center; 
+  overflow: hidden; 
+  position: relative;
+  padding-bottom: 25px;
+  padding-top: 0px;
+ 
+  background-color:  rgb(0, 0, 7);
+
+
+  border-radius: 15px;
+  margin-top:70px;
+ 
     
     
   }
   
   .banner img {
-    width: 100%; 
-    height: 100%; 
-    margin: auto; 
-    object-fit: cover;
+    max-width: 80%; /* Ensure the image does not exceed the width of the container */
+    max-height: auto; /* Ensure the image does not exceed the height of the container */
+    border-radius: 10px;
+    padding: 10px;
+    height: auto;
+    display: block;
+    margin: auto;
+    object-fit:cover;
+    margin-bottom:10px;
+   
  
   }
 
@@ -215,26 +231,33 @@ font-size:1em;
 .intro {
     position:relative;
     display:flex;
-    background-color:  rgb(1, 4, 10);
+    
+    background-color:black;
+    background-color:  rgb(1, 1, 8);
+    width:auto;
     height: auto;
-    margin-top:0px;
-    border-radius: 10px;
+    margin-top:1.5px;
+    border-radius: 15px;
     padding: 0px;
     padding-bottom: 10px;
-    padding-left: 10px;
+    padding-left: 20px;
+    margin-left: 0px;
+
     
 }
 
 .container {
   position:relative;
-    max-width: 1200px;
+  max-width: 1200px;
+    width:100%;
     margin: 0 auto;
 }
 
 .intro-content {
     margin-bottom: 0px;
-    width: 70%; /* Set the width of the intro content */
+    width: 60%; /* Set the width of the intro content */
     float: left; /* Float the content to the left */
+    justify-content: left; 
     padding-right: 20px; /* Add some spacing */
     color: white;
     font-family:Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
@@ -251,9 +274,9 @@ font-size:1em;
 }
 
 .intro-content p {
-  font-size: 1em;
+  font-size: 0.9em;
   font-family:Cambria Math, Cochin, Georgia, Times, 'Times New Roman', serif;
-    font-weight:100;
+  font-weight:100;
   margin-bottom: 20px;
   font-family:Cambria Math, Cochin, Georgia, Times, 'Times New Roman', serif;
   text-align:justify
@@ -262,16 +285,17 @@ font-size:1em;
 .cards {
     display: flex;
     flex-direction:column;
-    justify-content: space-between;
-    width: 70%; /* Set the width of the cards */
+    justify-content: space-around;
+    width: 60%; /* Set the width of the cards */
     bottom:10px;
     
 }
 
 .card {
-    background-color: rgb(224, 236, 247,0);
+    
     background-color: rgba(red, green, blue, 0); /*transparant color*/
-    color: whitesmoke;
+    background-color: rgb(24, 62, 255,0);
+    color: rgb(179, 46, 46);
     border:white;
 
     border-radius: 10px;
@@ -285,7 +309,7 @@ font-size:1em;
     display: flex;
     flex-direction: row;
     align-items:start;
-    justify-content:left;
+    justify-content:space-between;
     overflow:hidden;
 }
 
@@ -309,8 +333,7 @@ font-size:1em;
 }
 
 .btn {
-    position: absolute; /* Set position to absolute for precise placement */
-    margin-left: 50%;
+    position: relative; /* Set position to absolute for precise placement */
 
     background-color: #FF3901;
     color: white;
@@ -339,7 +362,7 @@ font-size:1em;
 .canvas {
   position: absolute; /* Set position to absolute for precise placement */
   top: 10px; /* Position canvas 20px from the top */
-  right: 5px; /* Position canvas 20px from the right */
+  right: 55px; /* Position canvas 20px from the right */
   /*border: 2px solid black; /* Add border for visualization */
 }
 

@@ -2,7 +2,9 @@ const gameStats = {
     currentPlayer : 1,
     moves : 0,
     player1Score: 0,
-    player2Score: 0
+    player2Score: 0,
+    validMove:0,
+    lastMove : [0,0,0]
 } 
 
 const size = 7;
@@ -59,8 +61,69 @@ document.addEventListener('DOMContentLoaded', () => {
         createSelecter(document.getElementById('selecter1'),'col');
         createSelecter(document.getElementById('selecter2'),'col');
         createSelecter(document.getElementById('selecter3'),'row');
+        updateOps(gameStats.currentPlayer);
+
         
     }
+
+    function updateOps(currentPlayer) {
+
+        if (currentPlayer == 1) {
+            var cell = document.getElementById('opera1');
+            var img = document.createElement('img');
+            img.src = './arithmo/multiplyp1.png';
+            img.alt = 'Description of the image';
+            img.style.width = '100%';
+            img.style.height = '100%';
+            img.style.objectFit = 'cover'; 
+            if(gameStats.moves>0) {
+                cell.removeChild(cell.firstChild);
+            }
+            cell.appendChild(img);
+
+            var cell = document.getElementById('opera2');
+            var img = document.createElement('img');
+            img.src = './arithmo/addp1.png';
+            img.alt = 'Description of the image';
+            img.style.width = '100%';
+            img.style.height = '100%';
+            img.style.objectFit = 'cover'; 
+            if(gameStats.moves>0) {
+                cell.removeChild(cell.firstChild);
+            }
+            //cell.removeChild(cell.firstChild);
+            cell.appendChild(img);
+        } else{
+            var cell = document.getElementById('opera1');
+            var img = document.createElement('img');
+            img.src = './arithmo/addp2.png';
+            img.alt = 'Description of the image';
+            img.style.width = '100%';
+            img.style.height = '100%';
+            img.style.objectFit = 'cover'; 
+            if(gameStats.moves>0) {
+                cell.removeChild(cell.firstChild);
+            }
+            //cell.removeChild(cell.firstChild);
+            cell.appendChild(img);
+
+            var cell = document.getElementById('opera2');
+            var img = document.createElement('img');
+            img.src = './arithmo/multiplyp2.png';
+            img.alt = 'Description of the image';
+            img.style.width = '100%';
+            img.style.height = '100%';
+            img.style.objectFit = 'cover'; 
+            if(gameStats.moves>0) {
+                cell.removeChild(cell.firstChild);
+            }
+            //cell.removeChild(cell.firstChild);
+            cell.appendChild(img);
+
+        }
+          
+
+    };
     
     function createSelecter(selecter, gridStyle) {
         //const size = parseInt(document.getElementById('size').value);
@@ -125,14 +188,15 @@ document.addEventListener('DOMContentLoaded', () => {
     
         //console.log('event status:', selectedCell.parentElement);
     
-        if (validMove(gameStats, targetSelecter)){
+        if (validMove(gameStats, targetSelecter)>0){
+            
             for (let i = 1;  i <=size ; i++) {
                 
                 const cell = targetSelecter.querySelector(`[id="s${i}"]`);
                 console.log('target index:', targetIndex);
                 if (cell) {
 
-                //cell.classList.remove('selected-player1', 'selecter-player2', 'selected');
+                cell.classList.remove('selected-player1', 'selected-player2', 'selected');
                 
                 
                     if(i == targetIndex){
@@ -142,27 +206,13 @@ document.addEventListener('DOMContentLoaded', () => {
                         if(targetSelecter.id === 'selecter'+2){
                             cell.classList.add('selected-player2'); // Apply 'selected' class to highlight the cell
                         } 
-                        if(targetSelecter.id === 'selecter'+3){
+                        if(targetSelecter.id === 'selecter'+3 && gameStats.moves > 2){
                             cell.classList.add('selected'); // Apply 'selected' class to highlight the cell
                         } else {
                             cell.classList.remove('selected');
                         }
 
                         console.log('target cell :', targetCell);
-                    } else {
-                        if (targetSelecter.id === 'selecter'+1){
-                            cell.classList.remove('selected-player1'); // Apply 'selected' class to highlight the cell
-                            cell.classList.remove('selected');
-                        } 
-                        if(targetSelecter.id === 'selecter'+2){
-                            cell.classList.remove('selected-player2'); // Apply 'selected' class to highlight the cell
-                            cell.classList.remove('selected');
-                        } 
-                        if(targetSelecter.id === 'selecter'+3){
-                            cell.classList.remove('selected'); // Apply 'selected' class to highlight the cell
-                        }
-                        //targetCell.classList.remove('selected'); // remove 'selected' class for all the other cells
-                        //console.log('target cell :', targetCell);
                     }
                     
 
@@ -170,9 +220,10 @@ document.addEventListener('DOMContentLoaded', () => {
                 
             }
             markCell(gameStats);
-            togglePlayer(gameStats);
+            
     
         }
+        updateMessages(gameStats);
     
         
         console.log('selecter:', targetSelecter);
@@ -181,14 +232,59 @@ document.addEventListener('DOMContentLoaded', () => {
     // Function to mark a cell in the grid
 
     function validMove(gameStats, selecter) {
-        if (gameStats.currentPlayer === 1 && (selecter.id === 'selecter'+1 || selecter.id === 'selecter'+3)){
-            return 1;
+        const selecter1 = document.getElementById('selecter1');
+        const selecter2 = document.getElementById('selecter2');
+        const selecter3 = document.getElementById('selecter3');
+    
+        const a = parseInt(getSelectedNumber(selecter1));
+        const b = parseInt(getSelectedNumber(selecter2));
+        const c = parseInt(getSelectedNumber(selecter3));
+        //thisMove = [a,b,c];
+
+        if(gameStats.moves<2){
+        
+            if (gameStats.currentPlayer === 1 && (selecter.id === 'selecter'+1)){
+                gameStats.moves++;
+                gameStats.validMove = 1;
+                
+                return 1;
+            }
+            if (gameStats.currentPlayer === 2 && (selecter.id === 'selecter'+2)){
+                gameStats.moves++;
+                gameStats.validMove = 1;
+                
+                return 2;
+                
+            } else {
+                gameStats.validMove = 0;
+                return 0;
+            }
+        } else{
+
+            
+                if (gameStats.currentPlayer === 1 && (selecter.id === 'selecter'+1 || selecter.id === 'selecter'+3) ){
+                    gameStats.moves++;
+                    gameStats.validMove = 1;
+                    
+                    return 1;
+                }
+                if (gameStats.currentPlayer === 2 && (selecter.id === 'selecter'+2 || selecter.id === 'selecter'+3) ){
+                    gameStats.moves++;
+                    gameStats.validMove = 1;
+                    
+                    return 2;
+                    gameStats.moves = gameStats.moves+1;
+                } else {
+                    gameStats.validMove = 0;
+                    return 0;
+                }
+            if (gameStats.lastMove === thisMove) {
+            }
+            else {
+                return -1;
+            }
         }
-        if (gameStats.currentPlayer === 2 && (selecter.id === 'selecter'+2 || selecter.id === 'selecter'+3)){
-            return 2;
-        } else {
-            return 0;
-        }
+
 
     }
 
@@ -226,21 +322,48 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
     
-    // Function to toggle between players
-    function togglePlayer(gameStats) {
-        gameStats.currentPlayer = gameStats.currentPlayer === 1 ? 2 : 1;
-        messageElement.classList.remove('player1', 'player2');
-        if (gameStats.currentPlayer === 1) {
-            messageElement.classList.add('player1');
-            messageElement.textContent = `Player ${gameStats.currentPlayer}'s turn`;
-        } else {
-            messageElement.classList.add('player2');
-            messageElement.textContent = `Player ${gameStats.currentPlayer}'s turn`;
+    // Function to updated messages
+    function updateMessages(gameStats) {
+        
+        if(gameStats.validMove>0){
+            gameStats.currentPlayer = gameStats.currentPlayer === 1 ? 2 : 1;
+            messageElement.classList.remove('player1', 'player2');
+            if (gameStats.currentPlayer === 1) {
+                messageElement.classList.add('player1');
+                messageElement.textContent = `Player ${gameStats.currentPlayer}'s turn`;
+            } else {
+                messageElement.classList.add('player2');
+                messageElement.textContent = `Player ${gameStats.currentPlayer}'s turn`;
+            }
+            //messageElement.textContent = `Player ${gameStats.currentPlayer}'s turn`;
+            //player1ScoreElement.textContent = 'Player 1 Score';
+            player1ScoreElement.textContent = `Player 1 Score : ${gameStats.player1Score} `;
+            player2ScoreElement.textContent = `Player 2 Score : ${gameStats.player2Score} `;
+            updateOps(gameStats.currentPlayer);
         }
-        //messageElement.textContent = `Player ${gameStats.currentPlayer}'s turn`;
-        //player1ScoreElement.textContent = 'Player 1 Score';
-        player1ScoreElement.textContent = `Player 1 Score : ${gameStats.player1Score} `;
-        player2ScoreElement.textContent = `Player 2 Score : ${gameStats.player2Score} `;
+        if(gameStats.validMove==0){
+            messageElement.classList.remove('player1', 'player2');
+            if (gameStats.currentPlayer === 1) {
+                messageElement.classList.add('player1');
+                messageElement.textContent = `Please Select from the Player ${gameStats.currentPlayer}'s grid`;
+            } else {
+                messageElement.classList.add('player2');
+                messageElement.textContent = `Please Select from the Player ${gameStats.currentPlayer}'s grid`;
+            }
+
+        }
+        if(gameStats.validMove==-1){
+            messageElement.classList.remove('player1', 'player2');
+            if (gameStats.currentPlayer === 1) {
+                messageElement.classList.add('player1');
+                messageElement.textContent = `Please select a new value`;
+            } else {
+                messageElement.classList.add('player2');
+                messageElement.textContent = `Please select a new value`;
+            }
+
+        }
+        
     }
     
     // Function to calculate the cell value based on the current player and index
@@ -254,11 +377,14 @@ document.addEventListener('DOMContentLoaded', () => {
         const c = parseInt(getSelectedNumber(selecter3));
     
         if (!isNaN(a) && !isNaN(b) && !isNaN(c)) {
+            //gameStats.lastMove = [a,b,c];
             if (player === 1) {
                 return a * c + b;
+                
             } else {
                 return b * c + a;
             }
+            
         } else {
             messageElement.classList.remove('player1', 'player2');
             if (player === 1) {
