@@ -4,7 +4,7 @@ bottombar.innerHTML = `
 
 <div class="bottom-ribbon">
   <div class="logo">
-    <img src="logo_orange-removebg-preview.png" alt="Logo"> <!-- Replace 'logo.png' with the path to your logo image -->
+    <img src="logo_orange_transparant.png" alt="Logo"> <!-- Replace 'logo.png' with the path to your logo image -->
   </div>
   <div class="title">
     Product Crafts <!-- Title next to the logo -->

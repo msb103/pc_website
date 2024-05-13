@@ -1,7 +1,7 @@
 @media only screen and (max-width: 768px) {
   body {
       font-size: 14px;
-      font-family:Cambria Math, Cochin, Georgia, Times, 'Times New Roman', serif;
+      font-family:DM Sans;
       font-weight:100;
   }
   .prod-tile{
@@ -13,7 +13,7 @@
 @media only screen and (min-width: 769px) and (max-width: 1024px) {
   body {
       font-size: 18px;
-      font-family:Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+      font-family:DM Sans;
       font-weight: 400;
   }
   .prod-tile{
@@ -47,6 +47,7 @@ display:flex;
   color: #ffffff; /* Text color */
   padding: 0px; /* Padding around the elements */
   margin-top: 20px;
+padding-left:10px;
   position: relative; 
   justify-content:last baseline;
   bottom: 0px; 
@@ -65,7 +66,8 @@ display:flex;
 
 .logo-icon {
   cursor: pointer; /* Show pointer cursor on hover */
-  position: absolute;
+  position: relative;
+  margin-left:20px;
   
   }
 .menu-icon {
@@ -76,12 +78,12 @@ cursor: pointer; /* Show pointer cursor on hover */
   position: relative;
   
     font-size: 1.5em; /* Adjust the font size of the title */
-    font-family:Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
-    margin-left: 0px;
+    font-family:DM Sans;
+    margin-left: 10px;
     width : auto;
     text-align:left;
     white-space: normal;
-    margin-bottom:10px;
+    margin-bottom:0px;
 }
 
 .menu-container {
@@ -96,7 +98,7 @@ cursor: pointer; /* Show pointer cursor on hover */
 display: flex; /* Use flexbox for layout */
 list-style: none; /* Remove default list styling */
 font-size: 0.8em;
-font-family:Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+font-family:DM Sans;
 margin: 0; /* Remove default margin */
 padding: 0; /* Remove default padding */
 color: black;
@@ -132,8 +134,7 @@ text-decoration: none; /* Remove the underline */
   }
 .menu-links li {
 margin-right: 5px; /* Add spacing between menu links */
-margin-left: 5px;
-font-family:Cambria Math, Cochin, Georgia, Times, 'Times New Roman', serif;
+font-family:DM Sans;
     font-weight:100;
 }
 .menu-links li:last-child {
@@ -155,7 +156,7 @@ font-size:1em;
 .banner-section {
   position: relative;
   width:calc(120%);
-  height: 450px; /* Set the height of the banner section */
+  height: 400px; /* Set the height of the banner section */
   display: flex;
   justify-content: center; /* Center the banner horizontally */
   align-items: center; /* Center the banner vertically */
@@ -168,6 +169,7 @@ font-size:1em;
 
 .banner {
 
+  max-height:100vh;
   width:auto;
   height:auto;
   position: relative;
@@ -191,15 +193,17 @@ font-size:1em;
   }
   
   .banner img {
-    max-width: 80%; /* Ensure the image does not exceed the width of the container */
-    max-height: auto; /* Ensure the image does not exceed the height of the container */
+
+    max-width: 70%;
+    
     border-radius: 10px;
     padding: 10px;
-    height: auto;
+
     display: block;
     margin: auto;
     object-fit:cover;
     margin-bottom:10px;
+    margin-top:10px;
    
  
   }
@@ -260,25 +264,24 @@ font-size:1em;
     justify-content: left; 
     padding-right: 20px; /* Add some spacing */
     color: white;
-    font-family:Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+    font-family:DM Sans;
     
 }
 
 .intro-content h2 {
   font-size: 1.3em;
-  font-family:Cambria Math, Cochin, Georgia, Times, 'Times New Roman', serif;
+  font-family:DM Sans;
   font-weight:100;
   margin-bottom: 0px;
-  font-family:Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
 
 }
 
 .intro-content p {
   font-size: 0.9em;
-  font-family:Cambria Math, Cochin, Georgia, Times, 'Times New Roman', serif;
+  font-family:DM Sans;
   font-weight:100;
   margin-bottom: 20px;
-  font-family:Cambria Math, Cochin, Georgia, Times, 'Times New Roman', serif;
+
   text-align:justify
 }
 
@@ -315,13 +318,13 @@ font-size:1em;
 
 .card h3 {
     font-size: 0.9em;
-    font-family:Cambria Math,;
+    font-family:DM Sans;
     position:relative;
     left:0;
     
     margin-top:0;
     margin-bottom: 0px;
-    font-family:Cambria Math, Cochin, Georgia, Times, 'Times New Roman', serif;
+    font-family:DM Sans;
     font-weight:400;
     justify-content:left;
     text-align: left;
@@ -408,9 +411,9 @@ font-size:1em;
 }
 .prod-tile h3 {
   font-size: 0.8em;
-  font-family:Cambria Math,;
+  font-family:DM Sans;
   margin-bottom: 00px;
-  font-family:Cambria Math, Cochin, Georgia, Times, 'Times New Roman', serif;
+  font-family:DM Sans;
   font-weight:100;
   justify-content:center;
   align-items:center;
@@ -431,7 +434,7 @@ font-size:1em;
 
 h4 {
   font-size: 1.3em;
-    font-family:Cambria Math, Cochin, Georgia, Times, 'Times New Roman', serif;
+  font-family:DM Sans;
     font-weight:100;
     margin-top:30px;
     margin-bottom: 10px;
@@ -487,4 +490,16 @@ h4 {
   border-radius: 10px;
   justify-items: left;
   justify-content: space-around;
+}
+
+.para{
+    margin-bottom: 0px;
+    float: left; /* Float the content to the left */
+    justify-content: justify; 
+    padding-right: 50px; /* Add some spacing */
+    margin-left: 50px;
+    margin-right: 50px;
+    color: black;
+    font-family:DM Sans;
+    
 }
