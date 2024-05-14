@@ -31,8 +31,8 @@ function loadImagesFromFolder(folderPath) {
         { imageUrl: `${folderPath}/whatisND.png`, linkUrl: "data_oil.html" },
         { imageUrl: `${folderPath}/whatisGG.png`, linkUrl: "goldengoose.html" },
         { imageUrl: `${folderPath}/whyGR.png`, linkUrl: "golden_ratio.html" },
-        { imageUrl: `${folderPath}/whoisJG3.png`, linkUrl: "johngalt.html" },
-        { imageUrl: `${folderPath}/whatDT.PNG`, linkUrl: "davinci_tesla.html" }
+        { imageUrl: `${folderPath}/WhoIsJG3.png`, linkUrl: "johngalt.html" },
+        { imageUrl: `${folderPath}/whatDT.png`, linkUrl: "davinci_tesla.html" }
     ];
   
     return imagesWithLinks;
