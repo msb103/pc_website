@@ -19,13 +19,20 @@ function loadImagesFromFolder(folderPath) {
 
   function loadImagesWithLinksFromFolder(folderPath) {
     // Define an array of objects containing image URLs and hyperlinks
-    const imagesWithLinks = [
-      //{ imageUrl: `${folderPath}/data_oil.PNG`, linkUrl: "data_oil.html" },
-      //{ imageUrl: `${folderPath}/golden_goose.png`, linkUrl: "goldengoose.html" },
-      //{ imageUrl: `${folderPath}/golden_ratio.PNG`, linkUrl: "golden_ratio.html" },
-      { imageUrl: `${folderPath}/WhoIsJG3.png`, linkUrl: "johngalt.html" },
-      //{ imageUrl: `${folderPath}/vinci_tesla.PNG`, linkUrl: "davinci_tesla.html" }
-      // Add more objects for additional images as needed
+    /*const imagesWithLinks = [
+      { imageUrl: `${folderPath}/data_oil.PNG`, linkUrl: "data_oil.html" },
+      { imageUrl: `${folderPath}/golden_goose.png`, linkUrl: "goldengoose.html" },
+      { imageUrl: `${folderPath}/golden_ratio.PNG`, linkUrl: "golden_ratio.html" },
+      { imageUrl: `${folderPath}/johngalt.png`, linkUrl: "johngalt.html" },
+      { imageUrl: `${folderPath}/vinci_tesla.PNG`, linkUrl: "davinci_tesla.html" } */
+       //Add more objects for additional images as needed
+
+       const imagesWithLinks = [
+        { imageUrl: `${folderPath}/whatisND.png`, linkUrl: "data_oil.html" },
+        { imageUrl: `${folderPath}/whatisGG.png`, linkUrl: "goldengoose.html" },
+        { imageUrl: `${folderPath}/whyGR.png`, linkUrl: "golden_ratio.html" },
+        { imageUrl: `${folderPath}/whoisJG3.png`, linkUrl: "johngalt.html" },
+        { imageUrl: `${folderPath}/whatDT.PNG`, linkUrl: "davinci_tesla.html" }
     ];
   
     return imagesWithLinks;

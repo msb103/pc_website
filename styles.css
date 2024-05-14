@@ -493,7 +493,7 @@ h4 {
 }
 
 .para{
-    margin-bottom: 0px;
+    margin-bottom: 10px;
     float: left; /* Float the content to the left */
     justify-content: justify; 
     padding-right: 50px; /* Add some spacing */
