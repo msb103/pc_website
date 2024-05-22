@@ -1,36 +1,59 @@
-@media only screen and (max-width: 768px) {
-  body {
-      font-size: 14px;
-      font-family:DM Sans;
-      font-weight:100;
-  }
-  .prod-tile{
-    min-width: 20px;
-    min-height: 20px;
-  }
+* {
+  box-sizing: border-box;
 }
 
-@media only screen and (min-width: 769px) and (max-width: 1024px) {
+
+
+
+body {
+  font-family: 'DM Sans';
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  overflow-x: hidden;
+  place-items: center;
+}
+
+
+@media only screen and (max-width: 768px) {
+  body {
+      font-size: 12px;
+      font-weight: 400;
+      
+  }
+  .banner img, banner1 img{
+    width: 100%;
+  }
+
+}
+
+@media only screen and (min-width: 769px) {
   body {
       font-size: 18px;
-      font-family:DM Sans;
-      font-weight: 400;
+      
+      font-weight: 200;
   }
-  .prod-tile{
-    min-width: 40px;
-    min-height: 40px;
+  .banner img, banner1 img{
+    width: 100%;
   }
+
 }
 
 
 .top-ribbon {
 background-color: white; /* Background color of the ribbon */
+background-color: rgb(0, 0, 7);
+display:flex;
 color: #141414; /* Text color */
 padding: 10px; /* Padding around the elements */
 position: fixed; /* Fixed positioning to stay at the top */
 top: 0; /* Align the ribbon to the top */
 left: 0; /* Align the ribbon to the left */
-height: 40px;
+height: 60px;
 width: 100%; /* Full width */
 margin-bottom: 10px;
 
@@ -39,35 +62,44 @@ display: flex; /* Use flexbox for layout */
 align-items: center; /* Center align items vertically */
 box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.2); /* Add bottom shadow */
 justify-content:left; /* Distribute items evenly along the main axis*/
-display:flex;
+
+padding-left:10px;
+
 }
 
 .bottom-ribbon {
   background-color: rgb(1, 8, 22); /* Background color of the ribbon */
-  color: #ffffff; /* Text color */
-  padding: 0px; /* Padding around the elements */
-  margin-top: 20px;
-padding-left:10px;
+  background-color: rgb(0, 0, 7);
+  color: white; /* Text color */
+  padding: 10px; /* Padding around the elements */
+  margin-top: 0px;
+  padding-left:10px;
   position: relative; 
-  justify-content:last baseline;
+  justify-content:left;
   bottom: 0px; 
   left: 0px;
   height: 60px;
-  width: 100%; /* Full width */
+  width: 100%;
+
 
   z-index: 1000; /* Ensure the ribbon stays on top of other content */
   display: flex; /* Use flexbox for layout */
   align-items: center; /* Center align items vertically */
   box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.2); /* Add bottom shadow */
-  justify-content:flex-start; /* Distribute items evenly along the main axis*/
+  justify-content:left; /* Distribute items evenly along the main axis*/
+  padding-left:10px;
 
   }
+  
+.bottom-ribbon.fixed{
+  position:fixed;
+}
   
 
 .logo-icon {
   cursor: pointer; /* Show pointer cursor on hover */
   position: relative;
-  margin-left:20px;
+
   
   }
 .menu-icon {
@@ -76,38 +108,45 @@ cursor: pointer; /* Show pointer cursor on hover */
 }
 .title {
   position: relative;
+  color:white;
   
     font-size: 1.5em; /* Adjust the font size of the title */
+    list-style: none;
+    text-decoration:none;
     font-family:DM Sans;
     margin-left: 10px;
     width : auto;
     text-align:left;
     white-space: normal;
-    margin-bottom:0px;
+    margin-bottom:10px;
+    font-weight:200;
 }
 
 .menu-container {
   display: flex;
   position: absolute;
-  right:10px;
+  right:20px;
   justify-content: right;
   margin-top:30px;
+ 
   width:500px;
 }
+
 .menu-links {
 display: flex; /* Use flexbox for layout */
 list-style: none; /* Remove default list styling */
-font-size: 0.8em;
+font-size: 0.9em;
 font-family:DM Sans;
 margin: 0; /* Remove default margin */
 padding: 0; /* Remove default padding */
-color: black;
+color: white;
 margin-top: 5px;
-margin-right:10px;
+
 align-self:center;
 width : auto;
 text-align:center;
 white-space: normal;
+font-weight:200;
 
 }
 
@@ -125,12 +164,17 @@ white-space: normal;
 .menu-links a{
 text-decoration: none; /* Remove the underline */
   color: #1f1f1f; /* Set the color of the links */
+  color:white;
+  margin-left:10px;
+  font-weight:200;
 
 }
 .menu-links b{
   text-decoration: none; /* Remove the underline */
     color: #ffffff; /* Set the color of the links */
     font-weight:100;
+    margin-left:10px;
+    font-weight:200;
   }
 .menu-links li {
 margin-right: 5px; /* Add spacing between menu links */
@@ -149,8 +193,9 @@ font-size:1em;
 }
 
 .logo img {
-    width: 50px; /* Adjust the width of the logo */
+    width: 40px; /* Adjust the width of the logo */
     height: auto; /* Maintain aspect ratio */
+    margin-bottom:10px;
 }
 
 .banner-section {
@@ -162,50 +207,37 @@ font-size:1em;
   align-items: center; /* Center the banner vertically */
   margin-bottom:0px;
   background-color:black;
-  margin-left:-20px;
-  border-radius:20px;
-  margin-right:-20px;
+
   }
 
-.banner {
-
-  max-height:100vh;
-  width:auto;
-  height:auto;
-  position: relative;
-  display: flex; 
-  flex-shrink:1;
-  justify-content: center; 
-  align-items: center; 
-  overflow: hidden; 
-  position: relative;
-  padding-bottom: 25px;
-  padding-top: 0px;
- 
-  background-color:  rgb(0, 0, 7);
-
-
-  border-radius: 15px;
-  margin-top:70px;
- 
+  .banner {
+    max-height: 80vh;
+    /*width: calc(100% + 40px);*/
+    width:100%;
     
-    
+    position: relative;
+    display: flex;
+    justify-content: center; 
+    align-items: center; 
+    overflow: hidden; 
+    /*padding: 0 0 25px 0;*/
+    background-color: rgb(0, 0, 7);
+    border-radius: 0px;
+    margin-top: 60px;
+
+    padding:5px;
   }
   
   .banner img {
-
-    max-width: 70%;
-    
+    display: flex;
+    max-height: 75vh;
     border-radius: 10px;
     padding: 10px;
-
-    display: block;
-    margin: auto;
-    object-fit:cover;
-    margin-bottom:10px;
-    margin-top:10px;
-   
- 
+    object-fit: contain;
+    margin: 10px auto;
+    justify-content: center; 
+    align-items: center; 
+    margin-bottom:20px;
   }
 
   .pagination-dots {
@@ -235,42 +267,47 @@ font-size:1em;
 .intro {
     position:relative;
     display:flex;
+    width:100%;
     
     background-color:black;
-    background-color:  rgb(1, 1, 8);
-    width:auto;
+    background-color:  rgb(21, 21, 26);
     height: auto;
-    margin-top:1.5px;
-    border-radius: 15px;
+    margin-top:0px;
     padding: 0px;
     padding-bottom: 10px;
     padding-left: 20px;
-    margin-left: 0px;
+    flex-direction:column;
+    justify-content:center;
 
     
 }
 
 .container {
-  position:relative;
-  max-width: 1200px;
+    position:relative;
+    display: flex;
+    flex-direction:row;
+    max-width: 1200px;
     width:100%;
     margin: 0 auto;
+    justify-content:space-around;
+    align-items:center;
 }
 
 .intro-content {
     margin-bottom: 0px;
-    width: 60%; /* Set the width of the intro content */
-    float: left; /* Float the content to the left */
-    justify-content: left; 
-    padding-right: 20px; /* Add some spacing */
+    font-family:"DM Sans";
+    width: 70%; /* Set the width of the intro content */
+    float:left; /* Float the content to the left */
+    justify-content:left; 
+    padding-right: 30px; /* Add some spacing */
     color: white;
-    font-family:DM Sans;
+    font-weight:100;
+
     
 }
 
 .intro-content h2 {
-  font-size: 1.3em;
-  font-family:DM Sans;
+  font-size: 1.8em;
   font-weight:100;
   margin-bottom: 0px;
 
@@ -278,8 +315,7 @@ font-size:1em;
 
 .intro-content p {
   font-size: 0.9em;
-  font-family:DM Sans;
-  font-weight:100;
+  font-weight:normal;
   margin-bottom: 20px;
 
   text-align:justify
@@ -287,50 +323,78 @@ font-size:1em;
 
 .cards {
     display: flex;
-    flex-direction:column;
+    flex-direction:row;
     justify-content: space-around;
-    width: 60%; /* Set the width of the cards */
-    bottom:10px;
+    width: 90%; /* Set the width of the cards */
     
 }
 
 .card {
     
     background-color: rgba(red, green, blue, 0); /*transparant color*/
-    background-color: rgb(24, 62, 255,0);
-    color: rgb(179, 46, 46);
+    background-color: rgb(0, 0, 10,1);
     border:white;
-
-    border-radius: 10px;
-    padding: 5px;
+    color: white;
+    border-radius: 20px;
+    border-width:5px;
 
     width:100%;
-    height:20px;
-    margin-right: 20px; /* Add spacing between the cards */
+    height:40px;
+    display:flex;
+    margin:10px;
+    border-left:20px;
+    border-right:20px;
     /*box-sizing: border-box; /* Include padding and border in the element's total width and height */
     position: relative; /* Set position to relative for absolute positioning */
-    display: flex;
-    flex-direction: row;
-    align-items:start;
-    justify-content:space-between;
+    justify-content:center;
+    align-items:center;
+    text-align: center;
+    
+
     overflow:hidden;
 }
 
-.card h3 {
-    font-size: 0.9em;
-    font-family:DM Sans;
+.card:hover {
+  background-color: #e0e0e0;
+  background-color:rgb(201, 201, 201);
+  transform: scale(1.0);
+  color:black;
+  font-weight:400;
+  justify-content:center;
+    align-items:center;
+    text-align: center;
+}
+
+.card.active {
+  
+  
+  background-color:#FF3901; /* Change to your preferred active state color */
+  background-color:rgb(201, 201, 201);
+  background-color:#FFC700;
+  color:black;
+  border:#FF3901;
+  border-width:2px;
+  transform: scale(1.0); /* Ensure the active card has the hover effect */
+  font-weight:600;
+  justify-content:center;
+    align-items:center;
+    text-align: center;
+}
+
+
+.card h4 {
+    font-size: 0.8em;
+
     position:relative;
-    left:0;
     
     margin-top:0;
     margin-bottom: 0px;
-    font-family:DM Sans;
-    font-weight:400;
-    justify-content:left;
-    text-align: left;
 
+    font-weight:normal;
+    justify-content:center;
+    align-items:center;
+    text-align: center;
     
-    /*color: rgb(247, 200, 47);*/
     color:#141414;
     color:white;
 }
@@ -365,15 +429,20 @@ font-size:1em;
 .canvas {
   position: absolute; /* Set position to absolute for precise placement */
   top: 10px; /* Position canvas 20px from the top */
-  right: 55px; /* Position canvas 20px from the right */
+  right:10px; /* Position canvas 20px from the right */
   /*border: 2px solid black; /* Add border for visualization */
 }
 
 .tile-section {
+  width:90%;
   display: flex;
+  position: relative;
+  flex-direction:row;
   justify-content: space-around;
   margin-top: 0px; /* Adjust margin as needed */
   flex-wrap: wrap;
+  align-items: center;
+  justify-content:space-around;
 }
 
 .prod-tile {
@@ -385,9 +454,11 @@ font-size:1em;
   background-color: #ddd; /* Set background color */
   border-radius: 10px; /* Add border radius for rounded corners */
   display: flex;
-  justify-content: space-around;
+  position: relative;
+  justify-content: flex-start;
   align-items: center;
   margin:10px;
+  margin-bottom:20px;
 }
 
 .prod-tile a {
@@ -399,32 +470,26 @@ font-size:1em;
   display: block;
 }
 .prod-tile img {
-  max-width: 60%;
-  max-height: 60%;
+  max-width: 80%;
+  max-height: 80%;
   position:relative;
-  margin-left:12px;
   margin-top:5px;
-  margin-bottom:0;
   object-fit: cover; /* Ensure the image covers the entire space */
-  justify-content:first baseline;
-  align-items: center;
+  justify-content:center;
+  align-items:first baseline;
 }
-.prod-tile h3 {
-  font-size: 0.8em;
+.prod-tile h4 {
+  font-size: 1.1em;
   font-family:DM Sans;
-  margin-bottom: 00px;
+  margin-top: 10px;
   font-family:DM Sans;
-  font-weight:100;
+  font-weight:200;
   justify-content:center;
   align-items:center;
   text-align:center;
   
   /*color: rgb(247, 200, 47);*/
-  color:#141414;
-}
-
-.prod-tile:hover {
-  background-color: #71ddfd; /* Change background color on hover */
+  color:white
 }
 
 .prod-tile p {
@@ -433,39 +498,52 @@ font-size:1em;
 }
 
 h4 {
-  font-size: 1.3em;
+  font-size: 1em;
   font-family:DM Sans;
-    font-weight:100;
+    font-weight:200;
     margin-top:30px;
     margin-bottom: 10px;
     color: rgb(4, 18, 37);
+    color:white;
 
 }
+
+.para {
+  font-size: 0.9em;
+  font-family:DM Sans;
+    font-weight:100;
+    color: rgb(255, 255, 255);
+
+}
+
+
 
 .banner1 {
   width: 100%; /* Set the width of the banner container */
-  height: auto; /* Set the height of the banner container */
+  max-height: 700px; /* Set the height of the banner container */
   display: flex; /* Use flexbox to center the image horizontally and vertically */
-  justify-content: center; /* Center the image horizontally */
-  align-items: center; /* Center the image vertically */
+  justify-content:center; /* Center the image horizontally */
+  align-items:center; /* Center the image vertically */
   overflow: hidden; /* Hide any overflow content */
   position: relative;
-  background-color:#0C1622;
-  border-radius: 10px;
-  margin-top: 40px;
-  margin-bottom:20px;
+  /*background-color:#0C1622;*/
+  margin-top: 0px;
+  margin-bottom:0px;
   
 }
 
+
+
 .banner1 img{
   max-width: 100%; /* Ensure the image does not exceed the width of the container */
-  max-height: 100%; /* Ensure the image does not exceed the height of the container */
+  max-height: 70vh; /* Ensure the image does not exceed the height of the container */
   border-radius: 10px;
-  padding: 10px;
-  height: auto;
-  display: block;
+  padding: 0px;
+  display: flex;
   margin: auto;
-  object-fit:cover;
+  object-fit:contain;
+  justify-content: center; 
+  align-items: center;
 }
 
 .banner2 {
@@ -473,22 +551,23 @@ h4 {
   height: auto; /* Auto height to fit content */
   display: grid; /* Use CSS grid */
   grid-template-columns: repeat(2, minmax(200px, 1fr)); /* Adjust based on image size */
-  margin-top: 20px;
-  margin-bottom:20px;
+  padding:20px;
+  margin-top: 60px;
+  margin-bottom:0px;
   gap: 10px; /* Adjust gap between images */
   justify-items: center;
   justify-content: space-around;
   align-items: center; /* Center images vertically */
   background-color: #0C1622;
-  border-radius: 10px;
   
 }
 
 .banner2 img {
-  width:80%; /* Set image width to fill grid cell */
-  height: auto; /* Auto height to maintain aspect ratio */
+  width:60%; /* Set image width to fill grid cell */
+  height: 60%; /* Auto height to maintain aspect ratio */
   border-radius: 10px;
-  justify-items: left;
+  justify-items: center;
+  align-items: center;
   justify-content: space-around;
 }
 
@@ -501,5 +580,45 @@ h4 {
     margin-right: 50px;
     color: black;
     font-family:DM Sans;
+    font-weight:400;
     
 }
+
+.domain {
+    
+  background-color: rgba(red, green, blue, 0); /*transparant color*/
+  background-color: rgb(255, 0, 10,0);
+  border:white;
+  color: white;
+  border-radius: 10px;
+  border-width:5px;
+
+  width:100%;
+  height:20px;
+  display:flex;
+  margin:10px;
+  /*box-sizing: border-box; /* Include padding and border in the element's total width and height */
+  position: relative; /* Set position to relative for absolute positioning */
+  justify-content:center;
+  align-items:center;
+  text-align: center;
+}
+.domain h4 {
+  font-size: 0.9em;
+  font-weight:200;
+
+  position:relative;
+  
+  margin-top:0;
+  margin-bottom: 0px;
+
+  justify-content:center;
+  align-items:center;
+  text-align: center;
+  
+  color:#141414;
+  color:white;
+}
+  
+
+

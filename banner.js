@@ -29,7 +29,7 @@ function loadImagesFromFolder(folderPath) {
 
        const imagesWithLinks = [
         { imageUrl: `${folderPath}/whatisND.png`, linkUrl: "data_oil.html" },
-        { imageUrl: `${folderPath}/whatisGG.png`, linkUrl: "goldengoose.html" },
+        { imageUrl: `${folderPath}/whatisGE.png`, linkUrl: "goldengoose.html" },
         { imageUrl: `${folderPath}/whyGR.png`, linkUrl: "golden_ratio.html" },
         { imageUrl: `${folderPath}/WhoIsJG3.png`, linkUrl: "johngalt.html" },
         { imageUrl: `${folderPath}/whatDT.png`, linkUrl: "davinci_tesla.html" }
@@ -89,3 +89,8 @@ function loadImagesFromFolder(folderPath) {
   
   // Call the function to create pagination dots based on the number of images
   createPaginationDots(5); // Change 3 to the number of images in your folder
+
+  function showImage(imageSrc) {
+    const displayedImage = document.getElementById('displayedImage');
+    displayedImage.src = imageSrc;
+}
