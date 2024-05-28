@@ -240,6 +240,27 @@ font-size:1em;
     margin-bottom:20px;
   }
 
+  .nav-button {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    background-color: rgba(0, 0, 0, 0);
+    color: #FF5300;
+    border: none;
+    padding: 10px;
+    cursor: pointer;
+    font-size: 24px;
+    z-index: 1;
+}
+
+.nav-button.left {
+    left: 10px;
+}
+
+.nav-button.right {
+    right: 10px;
+}
+
   .pagination-dots {
     margin-top: 10px;
     text-align: center;
@@ -291,6 +312,7 @@ font-size:1em;
     margin: 0 auto;
     justify-content:space-around;
     align-items:center;
+    min-width:fit-content;
 }
 
 .intro-content {
@@ -324,6 +346,7 @@ font-size:1em;
 .cards {
     display: flex;
     flex-direction:row;
+    flex-wrap:wrap;
     justify-content: space-around;
     width: 90%; /* Set the width of the cards */
     
@@ -339,7 +362,7 @@ font-size:1em;
     border-width:5px;
 
     width:100%;
-    height:40px;
+    height:30px;
     display:flex;
     margin:10px;
     border-left:20px;
@@ -348,10 +371,11 @@ font-size:1em;
     position: relative; /* Set position to relative for absolute positioning */
     justify-content:center;
     align-items:center;
-    text-align: center;
-    
-
+    text-align:center;
+    padding:15px;
     overflow:hidden;
+    width:250px;
+    min-width:fit-content;
 }
 
 .card:hover {
@@ -394,6 +418,7 @@ font-size:1em;
     justify-content:center;
     align-items:center;
     text-align: center;
+  
     
     color:#141414;
     color:white;
@@ -505,6 +530,10 @@ h4 {
     margin-bottom: 10px;
     color: rgb(4, 18, 37);
     color:white;
+    justify-content:center;
+    align-items:center;
+    text-decoration: none;
+    
 
 }
 
@@ -516,6 +545,17 @@ h4 {
 
 }
 
+.email-link{
+  color:inherit;
+  text-decoration:none;
+
+}
+
+.email-link:hover, email-link:focus, email-link:active{
+  color:inherit;
+  text-decoration:none;
+  
+}
 
 
 .banner1 {
