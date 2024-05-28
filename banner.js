@@ -55,12 +55,25 @@ function loadImagesFromFolder(folderPath) {
   updatePaginationDots(currentIndex);
     
   }
+
+  function nextImage() {
+    const imagesWithLinks = loadImagesWithLinksFromFolder("./banner_images");
+    //currentIndex = (currentIndex + 1) % imagesWithLinks.length;
+    updateBannerImage(currentIndex);
+}
+
+function prevImage() {
+    const imagesWithLinks = loadImagesWithLinksFromFolder("./banner_images");
+    currentIndex = (currentIndex - 2 + imagesWithLinks.length) % imagesWithLinks.length;
+    updateBannerImage(currentIndex);
+}
   
   // Initial call to update the banner image
   updateBannerImage();
+  setInterval(updateBannerImage, 5000);
   
   // Refresh the banner image every 10 seconds
-  setInterval(updateBannerImage, 5000);
+  
 
 
   function createPaginationDots(numDots) {
@@ -72,6 +85,7 @@ function loadImagesFromFolder(folderPath) {
       if (i === 0) {
         dot.classList.add('active');
       }
+      dot.addEventListener('click', () => updateBannerImage(i-1));
       paginationDotsContainer.appendChild(dot);
     }
   }
