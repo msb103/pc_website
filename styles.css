@@ -551,11 +551,7 @@ h4 {
 
 }
 
-.email-link:hover, email-link:focus, email-link:active{
-  color:inherit;
-  text-decoration:none;
-  
-}
+
 
 
 .banner1 {
@@ -590,7 +586,7 @@ h4 {
   width: 100%;
   height: auto; /* Auto height to fit content */
   display: grid; /* Use CSS grid */
-  grid-template-columns: repeat(2, minmax(200px, 1fr)); /* Adjust based on image size */
+  grid-template-columns: repeat(auto-fit, minmax(400px, 1fr)); /* Adjust based on image size */
   padding:20px;
   margin-top: 60px;
   margin-bottom:0px;
