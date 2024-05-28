@@ -14,7 +14,7 @@ bottombar.innerHTML = `
       <li><b href="research.html">Research |</b></li> <!-- Replace '#' with the link to the Home page -->
       <li><b href="partnership.html">Partner with us |</b></li> <!-- Replace '#' with the link to The Board page -->
       <li><a href="aboutus.html">About Us |</a></li> <!-- Replace '#' with the link to the Design Gallery page -->
-      <li><b href="contactus.html">Contact Us</b></li> <!-- Replace '#' with the link to the Crafters Blog page -->
+      <li><a href="contactus.html">Contact Us</a></li> <!-- Replace '#' with the link to the Crafters Blog page -->
     </ul>
   </div>
   
