@@ -29,7 +29,7 @@ function loadImagesFromFolder(folderPath) {
 
        const imagesWithLinks = [
         { imageUrl: `${folderPath}/whatisND.png`, linkUrl: "data_oil.html" },
-        { imageUrl: `${folderPath}/whatisGE.png`, linkUrl: "goldengoose.html" },
+        //{ imageUrl: `${folderPath}/whatisGE.png`, linkUrl: "goldengoose.html" },
         { imageUrl: `${folderPath}/whyGR.png`, linkUrl: "golden_ratio.html" },
         { imageUrl: `${folderPath}/WhoIsJG3.png`, linkUrl: "johngalt.html" },
         { imageUrl: `${folderPath}/whatDT.png`, linkUrl: "davinci_tesla.html" }
@@ -53,6 +53,7 @@ function loadImagesFromFolder(folderPath) {
   // Increment index for the next image
   currentIndex = (currentIndex + 1) % imagesWithLinks.length;
   updatePaginationDots(currentIndex);
+
     
   }
 
