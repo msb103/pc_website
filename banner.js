@@ -1,6 +1,7 @@
 // Function to load images from a folder
 folderPath = "./banner-images";
 currentIndex = 0;
+nDots = 5;
 function loadImagesFromFolder(folderPath) {
     // Add your logic here to fetch images from the specified folder path
     // You can use AJAX requests, server-side scripting, or any other method to dynamically load images
@@ -34,7 +35,7 @@ function loadImagesFromFolder(folderPath) {
         { imageUrl: `${folderPath}/WhoIsJG3.png`, linkUrl: "johngalt.html" },
         { imageUrl: `${folderPath}/whatDT.png`, linkUrl: "davinci_tesla.html" }
     ];
-  
+    nDots = imagesWithLinks.length;
     return imagesWithLinks;
   }
   
@@ -103,7 +104,7 @@ function prevImage() {
   }
   
   // Call the function to create pagination dots based on the number of images
-  createPaginationDots(5); // Change 3 to the number of images in your folder
+  createPaginationDots(nDots); // Change 3 to the number of images in your folder
 
   function showImage(imageSrc) {
     const displayedImage = document.getElementById('displayedImage');

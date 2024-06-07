@@ -5,21 +5,24 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Sudoku</title>
     <link rel="stylesheet" href="./sudoku/sudoku.css">
+    <link rel="icon" type="image/x-icon" href="favicon.ico">
     <link href='https://fonts.googleapis.com/css?family=DM Sans' rel='stylesheet'>
 </head>
 <body>
-    <div class="container">
-        <h1>Sudoku</h1>
-        
-        <div>
-            <script src="./navbar_b.js"></script>
-        </div>
-        <div id="board" class="board"></div>
+
+    <h1>Sudoku</h1>
+    
+    <div>
+        <script src="./navbar_b.js"></script>
+    </div>
+    <div id="board" class="board"></div>
+    <div class="container" style="flex-direction:row">
         <button class="solve-btn">Solve</button>
         <button class="clear-btn">Clear</button>
         <button class="new-game-btn">New Game</button>
-        <div class="message"></div>
     </div>
+    <div class="message"></div>
+
     <script src="./sudoku/sudoku.js"></script>
     <div>
         <script src="bottombar.js"></script>

@@ -21,7 +21,7 @@ body {
 
 @media only screen and (max-width: 768px) {
   body {
-      font-size: 12px;
+      font-size: 16px;
       font-weight: 400;
       
   }
@@ -29,8 +29,21 @@ body {
   .container {
     flex-direction: column;
   }
+ 
+  .banner1 {
+    flex-direction: column;
+  }
+  .banner1 img{
+    width:90%;
+  }
 
-
+  .cards {
+    flex-direction:column;
+    
+  }
+  .card{
+    min-width:70%;
+  }
 }
 
 @media only screen and (min-width: 769px) {
@@ -42,6 +55,24 @@ body {
   .container {
     flex-direction: row;
   }
+
+  .banner1 {
+    flex-direction: row;
+    max-height:auto;
+  }
+  .banner1 img {
+    width:27%;
+  }
+
+  .cards {
+    flex-direction:row;
+    
+  }
+
+  .card{
+    min-width:30%;
+  }
+
 
 }
 
@@ -222,6 +253,7 @@ font-size:1em;
     justify-content: center; 
     align-items: center; 
     overflow: hidden; 
+    align-self:center;
     /*padding: 0 0 25px 0;*/
     background-color: rgb(0, 0, 7);
     border-radius: 0px;
@@ -237,23 +269,25 @@ font-size:1em;
     width:100%;
     padding: 10px;
     object-fit: contain;
-    margin: 10px auto;
+    margin: 10px;
     justify-content: center; 
     align-items: center; 
-    margin-bottom:20px;
+    padding-bottom:50px;
+    align-self:center;
   }
 
   .nav-button {
     position: absolute;
-    top: 50%;
-    transform: translateY(-50%);
+
     background-color: rgba(0, 0, 0, 0);
     color: #FF5300;
+    color:white;
     border: none;
-    padding: 10px;
+    padding: 0px;
     cursor: pointer;
     font-size: 24px;
     z-index: 1;
+    bottom:5px;
 }
 
 .nav-button.left {
@@ -266,6 +300,7 @@ font-size:1em;
 
   .pagination-dots {
     margin-top: 10px;
+    padding-top:10px;
     text-align: center;
     position: absolute; /* Position the pagination dots relative to the banner container */
     bottom: 0px; /* Adjust the distance from the bottom of the banner container */
@@ -277,7 +312,7 @@ font-size:1em;
     display: inline-block;
     width: 10px;
     height: 10px;
-    border-radius: 50%;
+    border-radius: 5px;;
     background-color: #999; /* Color for inactive dots */
     margin: 0 10px;
     margin-bottom: 10px;
@@ -285,7 +320,16 @@ font-size:1em;
   }
   
   .pagination-dot.active {
+    
+    background-color: white; /* Color for inactive dots */
     background-color: #ee3f09; /* Color for active dot */
+    width:50px;
+    
+  }
+  .pagination-dot:hover {
+    
+    cursor:pointer;
+    
   }
   
 .intro {
@@ -294,12 +338,13 @@ font-size:1em;
     width:100%;
     
     background-color:black;
-    background-color:  rgb(21, 21, 26);
+    background-color:  rgb(7, 20, 32);
+    background-color: rgb(11, 21, 30);
     height: auto;
     margin-top:0px;
     padding: 0px;
     padding-bottom: 10px;
-    padding-left: 20px;
+    padding-left: 0px;
     flex-direction:column;
     justify-content:center;
 
@@ -311,29 +356,53 @@ font-size:1em;
     display: flex;
     max-width: 1200px;
     width:100%;
-    margin: 0 auto;
+
+    padding:0px;
     justify-content:space-around;
     align-items:center;
     min-width:fit-content;
+    align-self:center;
 }
+
+.container img{
+  max-width: 90%; /* Ensure the image does not exceed the width of the container */
+
+  border-radius: 10px;
+  padding: 0px;
+  display: flex;
+  margin: 20px;
+  object-fit:contain;
+  justify-content: center; 
+  align-items: center;
+}
+
+
 
 .intro-content {
     margin-bottom: 0px;
     font-family:"DM Sans";
-    width: 70%; /* Set the width of the intro content */
+    width: 90%; /* Set the width of the intro content */
     float:left; /* Float the content to the left */
-    justify-content:left; 
-    padding-right: 30px; /* Add some spacing */
+    justify-content:center; 
+    padding-right: 10px; /* Add some spacing */
     color: white;
-    font-weight:100;
-
-    
+    font-weight:100;   
 }
 
 .intro-content h2 {
   font-size: 1.8em;
-  font-weight:100;
+  font-weight:200;
   margin-bottom: 0px;
+  text-align:left;
+
+}
+
+.intro-content h4 {
+  font-size: 1em;
+  font-weight:200;
+  margin-bottom: 0px;
+  text-align:justify;
+  width:100%;
 
 }
 
@@ -341,46 +410,81 @@ font-size:1em;
   font-size: 0.9em;
   font-weight:normal;
   margin-bottom: 20px;
+  text-align:justify;
 
-  text-align:justify
 }
 
-.cards {
+.buttons {
     display: flex;
     flex-direction:row;
     flex-wrap:wrap;
     justify-content: space-around;
-    width: 90%; /* Set the width of the cards */
+    width: 100%; /* Set the width of the cards */
     
 }
 
-.card {
+.btn {
+    
+  background-color: rgba(red, green, blue, 0); /*transparant color*/
+  background-color: rgb(0, 0, 10,1);
+  border:white;
+  color: white;
+  border-radius: 20px;
+  border-width:5px;
+  padding:0px;
+  display:flex;
+  margin-top:20px;
+  margin-bottom:20px;
+
+
+  /*box-sizing: border-box; /* Include padding and border in the element's total width and height */
+  position: relative; /* Set position to relative for absolute positioning */
+  justify-content:center;
+  align-items:center;
+  text-align:center;
+  padding:5px;
+  overflow:hidden;
+  min-width:30vw;
+}
+
+.cards {
+  display: flex;
+  flex-wrap:wrap;
+  justify-content: space-around;
+  align-items:center;
+  width: 900%; /* Set the width of the cards */
+  
+}
+
+.card{
     
     background-color: rgba(red, green, blue, 0); /*transparant color*/
-    background-color: rgb(0, 0, 10,1);
+    background-color: rgb(0, 0, 10,0.8);
     border:white;
     color: white;
     border-radius: 20px;
     border-width:5px;
-
-    width:100%;
-    height:30px;
+    padding:0px;
     display:flex;
-    margin:10px;
-    border-left:20px;
-    border-right:20px;
+    margin-top:10px;
+    margin-bottom:10px;
+
+
     /*box-sizing: border-box; /* Include padding and border in the element's total width and height */
     position: relative; /* Set position to relative for absolute positioning */
     justify-content:center;
     align-items:center;
     text-align:center;
-    padding:15px;
+    padding:5px;
     overflow:hidden;
-    width:250px;
-    min-width:fit-content;
+    width:30vh;
 }
 
-.card:hover {
+.btn img{
+  width:100%;
+}
+
+.btn:hover {
   background-color: #e0e0e0;
   background-color:rgb(201, 201, 201);
   transform: scale(1.0);
@@ -391,7 +495,7 @@ font-size:1em;
     text-align: center;
 }
 
-.card.active {
+.btn.active {
   
   
   background-color:#FF3901; /* Change to your preferred active state color */
@@ -408,8 +512,9 @@ font-size:1em;
 }
 
 
-.card h4 {
+.btn h4 {
     font-size: 0.8em;
+    font-weight:800;
 
     position:relative;
     
@@ -426,37 +531,19 @@ font-size:1em;
     color:white;
 }
 
-.btn {
-    position: relative; /* Set position to absolute for precise placement */
-
-    background-color: #FF3901;
-    color: white;
-    padding-inline: 0px;
-    width:22px;
-    height: 22px;
-    border-radius: 11px;
-    text-decoration: none;
-    align-items:center;
-    justify-content:center;
-    overflow:hidden;
-    
-}
-.btn img{
-  width: 22px;
-  height: 22px;
-  justify-content:center;
-  align-items:center;
-}
-
 .canvas-container {
-  position: relative; /* Set position to relative for absolute positioning */
+  position: absolute; /* Set position to relative for absolute positioning */
   display: flex;
+  align-self:baseline;
+  justify-content:center;
+
 }
 
 .canvas {
   position: absolute; /* Set position to absolute for precise placement */
-  top: 10px; /* Position canvas 20px from the top */
-  right:10px; /* Position canvas 20px from the right */
+  top: 100px; /* Position canvas 20px from the top */
+  left:50%; /* Position canvas 20px from the right */
+  transform: translateX(-50%); /* Center the pagination dots horizontally */
   /*border: 2px solid black; /* Add border for visualization */
 }
 
@@ -485,7 +572,8 @@ font-size:1em;
   justify-content: flex-start;
   align-items: center;
   margin:10px;
-  margin-bottom:20px;
+  margin-bottom:10px;
+  margin-top:40px;
 }
 
 .prod-tile a {
@@ -508,7 +596,7 @@ font-size:1em;
 .prod-tile h4 {
   font-size: 1.1em;
   font-family:DM Sans;
-  margin-top: 10px;
+  margin-top: 0px;
   font-family:DM Sans;
   font-weight:200;
   justify-content:center;
@@ -558,11 +646,11 @@ h4 {
 
 .banner1 {
   width: 100%; /* Set the width of the banner container */
-  max-height: 700px; /* Set the height of the banner container */
   display: flex; /* Use flexbox to center the image horizontally and vertically */
+  position:relative;
   justify-content:center; /* Center the image horizontally */
   align-items:center; /* Center the image vertically */
-  overflow: hidden; /* Hide any overflow content */
+  overflow:hidden; /* Hide any overflow content */
   position: relative;
   /*background-color:#0C1622;*/
   margin-top: 0px;
@@ -573,14 +661,12 @@ h4 {
 
 
 .banner1 img{
-  max-width: 100%; /* Ensure the image does not exceed the width of the container */
-  max-height: 70vh; /* Ensure the image does not exceed the height of the container */
   border-radius: 10px;
   padding: 0px;
   display: flex;
-  margin: auto;
+  position:relative;
   object-fit:contain;
-  justify-content: center; 
+  justify-content: space-around; 
   align-items: center;
 }
 
@@ -597,6 +683,8 @@ h4 {
   justify-content: space-around;
   align-items: center; /* Center images vertically */
   background-color: #0C1622;
+
+  text-align:center;
   
 }
 
@@ -607,6 +695,7 @@ h4 {
   justify-items: center;
   align-items: center;
   justify-content: space-around;
+
 }
 
 .para{

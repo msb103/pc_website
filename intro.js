@@ -1,24 +1,34 @@
 document.addEventListener('DOMContentLoaded', () => {
-    const cards = document.querySelectorAll('.card');
-    const displayedImage = document.getElementById('introImage');
+    const buttons = document.querySelectorAll('.btn');
+    //const displayedImage = document.getElementById('introImage');
+    const image1 = document.getElementById('image1');
+    const image2 = document.getElementById('image2');
+    const image3 = document.getElementById('image3');
+    const display = document.getElementById('msg');
 
     // Function to handle the click event
-    const handleCardClick = (card) => {
-        const imageSrc = card.getAttribute('intro-image');
-        displayedImage.src = imageSrc;
+    const handleCardClick = (btn) => {
+        //const imageSrc = card.getAttribute('intro-image');
+        //displayedImage.src = imageSrc;
+        const images = JSON.parse(btn.getAttribute('data-images'));
+        const msg=JSON.parse(btn.getAttribute('msg'));
+            image1.src = images[0];
+            image2.src = images[1];
+            image3.src = images[2];
+            //display = msg;
         // Remove active class from all cards
-        cards.forEach(card => card.classList.remove('active'));
+        buttons.forEach(card => card.classList.remove('active'));
         // Add active class to the clicked card
-        card.classList.add('active');
+        btn.classList.add('active');
     };
 
     // Add click event listeners to all cards
-    cards.forEach(card => {
+    buttons.forEach(card => {
         card.addEventListener('click', () => handleCardClick(card));
     });
 
     // Set the default card (first card in this case) as selected
-    if (cards.length > 0) {
-        handleCardClick(cards[0]);
+    if (buttons.length > 0) {
+        handleCardClick(buttons[0]);
     }
 });

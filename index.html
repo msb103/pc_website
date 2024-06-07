@@ -4,6 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Product Crafts - Home</title>
+<link rel="icon" type="image/x-icon" href="favicon.ico">
 <link rel="stylesheet" href="styles.css">
 <!--link href='https://fonts.googleapis.com/css?family=DM Sans' rel='stylesheet'-->
 
@@ -25,9 +26,11 @@
     <!--img id="banner-image" src="" alt="Banner Image"-->
     <a id="banner-link" href="" target="_blank"><img id="banner-image" src="" alt="Banner Image"></a>
     <button class="nav-button right" onclick="nextImage()">&#9654;</button>
-  </div>
-    <div class="pagination-dots"></div>
+    
+  </div>  
+  <div class="pagination-dots"></div>
 </div>
+
     
       
 
@@ -35,6 +38,7 @@
 
 <div class="intro">
     <div class="container">
+        
         <div class="intro-content">
             <h2>Welcome to the Uncharted World of Innovation</h2>
             <h4>Product Crafts is a New-Product crafting company which specializes in designing, IP creation, 
@@ -43,27 +47,39 @@
               the design DNA of our world. We cover your engineering, design and financial risk of designing 
               new products and solutions while you stay focused on introducing them to the world. </h4>          
         </div>
-
-        <div class="canvas-container">
-          <a href="aboutus.html">
-            <canvas class="canvas"></canvas>
-          </a>
-          <script src="canvas.js"></script>
-        </div>
-
+        
     </div>
+    
+</div>
+<div class="intro">
 
-    <div class="container">
-        <div class="cards">
-            <div class="card" intro-image="launch1.png">Launch your Product on Day 1</div>
-            <div class="card" intro-image="invest1.png"> Invest in Product Design & IP</div>
-            <div class="card" intro-image="accelerate1.png">Accelerate your Product Business</div>
+    <div class="container" style="flex-direction:column">
+        <!--div class="cards">
+            <div class="card" intro-image="launch1.png">Day 1 Launch</div>
+            <div class="card" intro-image="invest1.png"> Invest</div>
+            <div class="card" intro-image="accelerate1.png">Accelerate</div>
         </div>
-        
-        
+        <div class="banner1";>
+          <img id="introImage" src="" alt="Click a card to display an image">
+        </div-->
+
+        <div class="buttons">
+          <div class="btn" data-images='["./opsimg/Launch1.png", "./opsimg/Launch2.png", "./opsimg/Launch3.png"]'>Day 1 Launch</div>
+          <div class="btn" data-images='["./opsimg/Invest1.png", "./opsimg/Invest2.png", "./opsimg/Invest3.png"]'>Invest</div>
         </div>
-          <div class="banner1";>
-            <img id="introImage" src="" alt="Click a card to display an image">
+
+        <div id="msg"></div>
+
+        <div class="cards" style="width:100%">
+          <canvas class="canvas"><a href="aboutus.html"></a></canvas>
+            
+            <script src="canvas.js"></script>
+          <div class="canvas-container">
+            
+          </div>
+          <div class="card"><img src="" id="image1" alt="Image 1"></div> 
+          <div class="card"><img src="" id="image2" alt="Image 2"></div> 
+          <div class="card"><img src="" id="image3" alt="Image 3"></div> 
         </div>
         <script src="intro.js"></script>
 
@@ -72,7 +88,7 @@
 
 <div class="intro" style="background-color: rgb(0,0,7)">
   <div class="container">
-      <div class="intro-content" style="width:100%">
+      <div class="intro-content" style="width:90%">
           <h2>Design Domains</h2>
           <h4>We deploy product design principles and fundamentals to design and develop products across multiple domains.
           </h4>          
@@ -88,9 +104,11 @@
       <div class="prod-tile"> <img src="./icon/computing.png" alt="Computing"> <h4>Computing</h4> </div>
       <div class="prod-tile"> <img src="./icon/robotics.png" alt="Robotics"> <h4>Robotics</h4> </div>
       <div class="prod-tile"> <img src="./icon/sustainability.png" alt="Sustainability"> <h4>Sustainability</h4> </div>
-     
+      
     </div>
+    
   </div>
+
 
   <!--div class="banner1";>
     <img style="width:70%"; id="domainImage" src="domains.png" alt="Click a card to display an image">
@@ -108,8 +126,17 @@
 
 
 <div>
+
   <script src="bottombar.js"></script>
+  
 </div>
+
+<!--div class="canvas-container">
+  <a href="aboutus.html">
+    <canvas class="canvas"></canvas>
+  </a>
+  <script src="canvas.js"></script>
+</div-->
 
 
 

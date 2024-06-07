@@ -1,0 +1,38 @@
+#board {
+    display: grid;
+    grid-template-columns: repeat(3, 150px);
+    grid-template-rows: repeat(3, 150px);
+    gap: 2px;
+    /*justify-content: center;*/
+}
+.cell {
+    width: 150px;
+    height: 150px;
+    border: 1px solid black;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 3em;
+}
+.selected {
+    background-color: rgb(5, 89, 167);
+    color: white;
+}
+#message {
+    margin-top: 20px;
+    font-size: 1.5em;
+    font-weight: bold;
+    justify-content: center;
+}
+button {
+    width: 150px; /* Set the width of the button */
+    height: 30px; /* Set the height of the button */
+    border-radius: 5px; /* Set the border radius to make the button rounded */
+    padding: 0px 20px; /* Set the padding inside the button (top/bottom, left/right) */
+    font-size: 16px; /* Set the font size of the button text */
+    background-color: #5e5f5e; /* Set the background color of the button */
+    color: white; /* Set the text color of the button */
+    border: none; /* Remove the default button border */
+    cursor: pointer; /* Change the cursor to a pointer when hovering over the button */
+    outline: none; /* Remove the default focus outline */
+}

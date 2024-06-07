@@ -3,7 +3,7 @@
     --player2-color: rgb(1, 8, 22);
   }
 
-.container {
+.board {
     /*margin: 20px;*/
     display: grid;
     grid-template-columns: 25% 50% 25%;
@@ -70,8 +70,7 @@ label {
     margin-right: 10px;
     display: flex;
     grid-column: 2 / 3; /* Place the gridContainer in the first column */
-    grid-row:span;
-    grid-row: span 1; /* Span 3 rows to align with the other elements */
+    grid-row: 3/ span 1; /* Span 3 rows to align with the other elements */
     justify-content: right;
     border : 5px green;
 }

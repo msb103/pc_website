@@ -4,13 +4,15 @@ const shape = 1; // set 0 for dodecahedran, 1 for sphere
 
 // Set canvas size
 //canvas.width = window.innerHeight/2;
-canvas.width = 300;
+canvas.width = 400;
 //canvas.height = window.innerHeight;
 //canvas.height = window.innerHeight/2;
-canvas.height = 200;
+canvas.height = 400;
 canvas.style.top = 30;
+const radius = 200;
 
-const numDots = 500;
+
+const numDots = 1500;
 const dots = [];
 
 // vertices of dodecahedron
@@ -55,7 +57,6 @@ function normalizeVector(vector) {
     return [vector[0] / magnitude, vector[1] / magnitude, vector[2] / magnitude];
 }
 
-const radius = 100;
 
 
 
@@ -146,7 +147,8 @@ function draw() {
 
     dots.forEach(dot => {
         // Rotate dots around the sphere's own vertical axis
-        const newX = (dot.x - canvas.width / 2) * Math.cos(angle) +  - (dot.z  - canvas.height / 2) * Math.sin(angle)  + canvas.width /2;
+        //const newX = (dot.x - canvas.width / 2) * Math.cos(angle) - (dot.z  - canvas.height / 2) * Math.sin(angle)  + canvas.width /2;
+        const newX = (dot.x) * Math.cos(angle) - (dot.z) * Math.sin(angle);
         const newZ = (dot.x - canvas.width / 2) * Math.sin(angle) + (dot.z - canvas.height / 2) * Math.cos(angle) + canvas.height / 2;
 
         dot.x = newX;
@@ -181,6 +183,6 @@ function draw() {
     requestAnimationFrame(draw);
     //setTimeout(drawWithDelay, 1000);
 }
-angle += 0.005;
+angle += 0.003;
 
 draw();

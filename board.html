@@ -6,13 +6,14 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Home Page</title>
     <link rel="stylesheet" href="styles.css"> <!-- Include CSS file -->
+    <link rel="icon" type="image/x-icon" href="favicon.ico">
     <link href='https://fonts.googleapis.com/css?family=DM Sans' rel='stylesheet'>
     <style>  
     /* styles.css */
 
-        .container {
+        .board {
             display: flex;
-            flex-wrap: wrap;
+            flex-wrap:wrap;
             grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); /* Create a grid with columns that automatically fill the available space */
             justify-content: center;
             gap:20px;
@@ -21,7 +22,7 @@
         .tile {
             width: 100px; /* Adjust the width of each tile */
             height: 100px; /* Adjust the height of each tile */
-            margin-top: 10px;
+            margin-top: 20px;
             margin-left:10px;
             margin-right: 10px;
             margin-bottom:20px;
@@ -61,7 +62,7 @@
         <script src="./navbar.js"></script>
     </div>
     <h1><br><br>The Board</h1>
-    <div class="container">
+    <div class="board">
         
         
         <div class="tile">
