@@ -4,18 +4,19 @@ bottombar.innerHTML = `
 
 <div class="bottom-ribbon">
   <div class="logo">
-    <img src="logo_white_transparant.png" alt="Logo"> <!-- Replace 'logo.png' with the path to your logo image -->
+    <a href="index.html"><img src="logo_white_transparant.png" alt="Logo"> </a> 
   </div>
   <div class="title">
-    Product Crafts <!-- Title next to the logo -->
+    <a href="index.html" style="text-decoration: none; color: white;">Product Crafts </a>
   </div>
-  <div class="menu-container">
-    <ul class="menu-links">
-      <li><b href="research.html">Research |</b></li> <!-- Replace '#' with the link to the Home page -->
-      <li><b href="partnership.html">Partner with us |</b></li> <!-- Replace '#' with the link to The Board page -->
-      <li><a href="aboutus.html">About Us |</a></li> <!-- Replace '#' with the link to the Design Gallery page -->
-      <li><a href="contactus.html">Contact Us</a></li> <!-- Replace '#' with the link to the Crafters Blog page -->
-    </ul>
+  <div class="menu-container" style="width:400px;">
+    <a  href = "contactus.html"> <img src="contactus.png" alt="Contact Us" style="width:100%;"> </a>
+    <!--ul class="menu-links">
+      <li><b href="research.html">Research |</b></li>
+      <li><b href="partnership.html">Partner with us |</b></li> 
+      <li><a href="aboutus.html">About Us |</a></li> 
+      <li><a href="contactus.html">Contact Us</a></li> 
+    </ul-->
   </div>
   
 </div>

@@ -160,6 +160,7 @@ label {
     font-weight: bold;
     justify-content: center;
     margin-bottom:0px;
+    text-align:center;
 }
 
 #message.player1 {
@@ -178,6 +179,7 @@ label {
     justify-content: center;
     color : var(--player2-color);
     margin-bottom: 0px;
+    
 }
 
 
@@ -188,6 +190,7 @@ label {
     justify-content: center;
     color: var(--player1-color);
     margin-bottom: 0px;
+    text-align:center;
 }
 #player2Score {
     margin-top: 5px;
@@ -196,6 +199,7 @@ label {
     justify-content: center;
     color: var(--player2-color);
     margin-bottom: 0px;
+    text-align:center;
 }
 
 .selected-player1 {
