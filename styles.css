@@ -120,7 +120,7 @@ padding-left:10px;
   justify-content:left;
   bottom: 0px; 
   left: 0px;
-  height: 120px;
+  height: 100px;
   width: 100%;
 
 
@@ -173,7 +173,7 @@ cursor: pointer; /* Show pointer cursor on hover */
   justify-content: right;
   align-self:end; 
   align-items:end;
-  width:300px;
+  min-width:300px;
   height:20px;
 }
 
@@ -199,6 +199,8 @@ font-weight:200;
   align-self:flex-end;
   align-items:end;
 }
+
+
 
 .menu-links-bot {
   display: flex; /* Use flexbox for layout */
@@ -387,8 +389,16 @@ font-size:1em;
     padding-left: 0px;
     flex-direction:column;
     justify-content:center;
+  
+}
 
-    
+.intro img{
+  display:flex;
+  position:relative;
+  flex-grow:1;
+  flex-shrink:1;
+  object-fit:fill;
+
 }
 
 .container {
