@@ -502,11 +502,13 @@ font-size:1em;
   color: #FFC700;
   color:white;
   border-radius: 20px;
-  border-width:5px;
+  border-width:3px;
   padding:0px;
   display:flex;
   margin-top:20px;
   margin-bottom:20px;
+  border-color:#FFC700;
+  border-style:solid;
 
 
   /*box-sizing: border-box; /* Include padding and border in the element's total width and height */
@@ -566,6 +568,7 @@ font-size:1em;
   justify-content:center;
     align-items:center;
     text-align: center;
+    border-color:rgb(201, 201, 201);
 }
 
 .btn.active {
