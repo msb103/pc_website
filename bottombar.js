@@ -10,7 +10,7 @@ bottombar.innerHTML = `
     <a href="index.html" style="text-decoration: none; color: white;">Product Crafts </a>
   </div>
   <div class="menu-container" style="max-width:35%;">
-    <a  href = "contactus.html"> <img src="contactus.png" alt="Contact Us" style="width:100%;"> </a>
+    <a  href = ""> <img src="contactus.png" alt="Contact Us" style="width:100%;"> </a>
     <!--ul class="menu-links">
       <li><b href="research.html">Research |</b></li>
       <li><b href="partnership.html">Partner with us |</b></li> 
