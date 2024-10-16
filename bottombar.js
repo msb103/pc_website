@@ -15,7 +15,7 @@ bottombar.innerHTML = `
       <li><b href="research.html">Research |</b></li>
       <li><b href="partnership.html">Partner with us |</b></li> 
       <li><a href="aboutus.html">About Us |</a></li> 
-      <li><a href="contactus.html">Contact Us</a></li> 
+      <li><a href="">Contact Us</a></li> 
     </ul-->
   </div>
   
