@@ -70,6 +70,9 @@ body {
   .container .image, .container .text {
     width:50%;
   }
+  .img{
+    width:90%;
+  }
  
 
   .banner1 {
@@ -283,6 +286,7 @@ font-size:1em;
     justify-self:center;
     justify-content:center;
     background-color:white;
+    flex-grow:1;
   }
 
   .banner-link img{
@@ -300,6 +304,7 @@ font-size:1em;
     
     position: relative;
     display: flex;
+    flex-direction:column;
     justify-content: center; 
     align-items: center; 
     overflow: hidden; 
@@ -349,12 +354,15 @@ font-size:1em;
 }
 
   .pagination-dots {
+    
+    display:flex;
     margin-top: 10px;
     padding-top:10px;
     text-align: center;
     position: relative; /* Position the pagination dots relative to the banner container */
     bottom: 0px; /* Adjust the distance from the bottom of the banner container */
     justify-self:center;
+    justify-content:space-around;
   }
   
   .pagination-dot {
@@ -455,19 +463,26 @@ font-size:1em;
 
 
 .intro-content {
-    margin-bottom: 0px;
-    font-family:"DM Sans";
-    width: 90%; /* Set the width of the intro content */
-    float:left; /* Float the content to the left */
-    justify-content:center; 
-    padding-right: 10px; /* Add some spacing */
-    color: white;
-    font-weight:100;   
+  flex-shrink:1;
+  margin-bottom: 0px;
+  font-family:"DM Sans";
+  width: 90%; /* Set the width of the intro content */
+  float:left; /* Float the content to the left */ 
+  padding-right: 10px; /* Add some spacing */
+  color: white;
+  font-weight:100;  
+
+}
+
+.intro-content img{
+  padding:0px;
+  object-fit:contain;
+
 }
 
 .intro-content h2 {
   font-size: 2em;
-  font-weight:200;
+  font-weight:300;
   margin-bottom: 0px;
   margin-left:0;
   text-align:left;
@@ -478,7 +493,7 @@ font-size:1em;
 
 
 .intro-content h4 {
-  font-size: 1em;
+  font-size: 0.8em;
   font-weight:200;
   margin-bottom: 0px;
   margin-left:0;
@@ -659,8 +674,8 @@ font-size:1em;
   justify-content: flex-start;
   align-items: center;
   margin:10px;
-  margin-bottom:10px;
-  margin-top:40px;
+  margin-bottom:30px;
+  margin-top:20px;
 }
 
 .prod-tile a {
@@ -887,8 +902,9 @@ h2 {
   background: transparent;
 
   display: flex;
-  align-items: center;
-  justify-content: center;
+  align-items: left;
+  justify-content: left;
+  justify-self:left;
 
   text-decoration: none;
   color: #000;
@@ -901,6 +917,20 @@ h2 {
 .tile1 img {
 height:100%;
   object-fit:contain; /* ⭐ key */
+  justify-content:flex-start;
+  justify-self:left;
+}
+
+.scr-img{
+  display: flex;
+  position:relative;
+  flex-shrink:1;
+  flex-wrap: wrap;
+  object-fit:contain;
+  align-items:stretch;
+  justify-content:flex-start;
+  
+  height:10px;
 }
 
 
