@@ -24,7 +24,7 @@ navbar.innerHTML = `
         <!--li><a href="board.html">The Board  </a></li> <!-- Replace '#' with the link to The Board page -->
         <li><a href="DesignGallery.html">Design Gallery </a></li> <!-- Replace '#' with the link to the Design Gallery page -->
         <li><a href="blog.html">Crafter's Blog  </a></li> <!-- Replace '#' with the link to the Crafters Blog page -->
-        <li><a href="aboutus.html">About Us </a></li> <!-- Replace '#' with the link to the Home page -->
+        <li><a href="contactus.html">Contact Us </a></li> <!-- Replace '#' with the link to the Home page -->
       </ul>
     </div>
 </div>
