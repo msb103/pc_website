@@ -17,7 +17,7 @@ navbar.innerHTML = `
       <ul class="menu-links">
         <li><a href="index.html">Home |</a></li> <!-- Replace '#' with the link to the Home page -->
         <!--li><a href="board.html">The Board  |</a></li> <!-- Replace '#' with the link to The Board page -->
-        <li><a href="designgallery.html">Design Gallery |</a></li> <!-- Replace '#' with the link to the Design Gallery page >
+        <li><a href="DesignGallery.html">Design Gallery |</a></li> <!-- Replace '#' with the link to the Design Gallery page >
         <li><a href="blog.html">Crafter's Blog  |</a></li> <!-- Replace '#' with the link to the Crafters Blog page -->
       </ul>
       <!--div class="menu-icon">
@@ -29,7 +29,6 @@ navbar.innerHTML = `
 `;
 
 document.body.appendChild(navbar.content);
-
 
 
 
