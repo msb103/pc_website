@@ -5,7 +5,7 @@ const rootPath = window.location.pathname.split('/').slice(0, -1).join('/') + '/
 navbar.innerHTML = `
 
 <div class="top-ribbon">
-    <link rel="stylesheet" href = "styles.css">
+    <link rel="stylesheet" href = "styles1.css">
     <link href='https://fonts.googleapis.com/css?family=DM Sans' rel='stylesheet'>        
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -32,6 +32,7 @@ navbar.innerHTML = `
 `;
 
 document.body.appendChild(navbar.content);
+
 
 
 
