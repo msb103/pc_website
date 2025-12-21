@@ -49,7 +49,7 @@ body {
     
   }
   .card{
-    min-width:100%;
+    min-width:80%;
     background-color: transparent;
     justify-content: center;
     justify-items: center;
