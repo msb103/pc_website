@@ -5,7 +5,7 @@ const rootPath = window.location.pathname.split('/').slice(0, -1).join('/') + '/
 navbar.innerHTML = `
 
 <div class="top-ribbon">
-    <link rel="stylesheet" href = "styles.css">
+    <link rel="stylesheet" href = "styles1.css">
     <div class="logo">
       <a href="index.html"><img src="logo_orange_transparant.png" alt="Logo"></a> <!-- Replace 'logo.png' with the path to your logo image -->
     </div>
@@ -29,6 +29,7 @@ navbar.innerHTML = `
 `;
 
 document.body.appendChild(navbar.content);
+
 
 
 
