@@ -50,7 +50,7 @@ body {
   }
 
   .card{
-    max-width:80%;
+    min-width:80%;
     background-color: transparent;
     justify-content: center;
     justify-items: center;
@@ -85,7 +85,7 @@ body {
   }
 
   .cards {
-    /*flex-direction:row;*/
+    flex-direction:row;
     
   }
 
@@ -421,13 +421,12 @@ font-size:1em;
 .container {
     position:relative;
     display: flex;
-    
+    max-width: 1200px;
     width:100%;
 
     padding:0px;
     justify-content:space-around;
     align-items:center;
-    min-width:fit-content;
     align-self:center;
 }
 
@@ -559,6 +558,7 @@ font-size:1em;
 
   
   justify-content: space-around;
+  object-fit:contain;
   align-items:center;
   width: 100%;
   padding: 10px;
@@ -591,7 +591,7 @@ font-size:1em;
     text-align:center;
     overflow:hidden;
     object-fit:contain;
-    min-width: 150px;
+    min-width: 200px;
 
 }
 
