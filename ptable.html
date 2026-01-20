@@ -1,0 +1,364 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Periodic Table Challenge 2026</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- SheetJS -->
+    <script src="https://cdn.jsdelivr.net/npm/xlsx/dist/xlsx.full.min.js"></script>
+
+    <style>
+        :root {
+            --bg: #1a1a2e;
+            --cell-bg: #16213e;
+            --accent: #4ecca3;
+            --text: #ffffff;
+            --wrong: #e94560;
+        }
+
+        html{
+            height:100%;
+        }
+
+        body {
+            font-family: 'Segoe UI', system-ui, sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            margin: 0;
+            text-align: center;
+
+            min-height:100vh;
+            display:flex;
+            flex-direction:column;
+            height:100%;
+        }
+
+        #game-header {
+            padding: 0px;
+            background: rgba(0,0,0,0.3);
+            flex-shrink:0;
+        }
+
+        #target-display {
+            font-size: 1.4rem;
+            padding: 5px;
+            border: 2px solid var(--accent);
+            border-radius: 8px;
+            margin-top: 0px;
+        }
+
+        #timer-bar {
+            height: 5px;
+            background: #333;
+            margin-top: 3px;
+        }
+
+        #timer-progress {
+            height: 100%;
+            background: var(--accent);
+            width: 0%;
+        }
+
+        .table-wrapper {
+            flex:1;
+            min-height:0;
+            /*height: calc(100vh - 220px); /* header space */
+            height:100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            
+            
+        }
+
+        .table-container {
+            flex:1;
+            width: 100%;
+            height: 100%;
+            display:flex;
+            max-width: 1400px;       /* optional */
+            max-height: 100%;
+            padding:10px;
+            /*transform-origin: top center;
+            will-change: transform;*/
+        }
+
+        .periodic-table {
+            display: grid;
+            grid-template-columns: repeat(18, 1fr);
+            grid-template-rows: repeat(10, 1fr);
+            
+            gap: 0.4vmin;
+            width: 100%;
+            /*aspect-ratio: 18 / 10;*/
+            height: 100%;
+            
+        }
+
+        .element-cell {
+            background: var(--cell-bg);
+            border: 1px solid var(--accent);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            font-weight: bold;
+            font-size: clamp(0.5rem, 1.2vw, 0.8rem);
+            min-width: 0;
+            min-height: 0;
+
+            flex-direction: column;
+            padding:2px;
+            line-height:1.1;
+        }
+
+        .element-cell .atomic {
+            font-size: 0.7em;
+            opacity: 0.7;
+        }
+
+        .element-cell .symbol {
+            font-size: 1.1em;
+            font-weight: bold;
+        }
+
+        .element-cell .name {
+            font-size: 0.9em;
+            text-align: center;
+        }
+
+        .element-cell .category {
+            font-size: 0.7em;
+            opacity: 0.8;
+        }
+
+        .element-cell.found {
+            background: var(--accent);
+            color: #000;
+        }
+
+        .element-cell.empty {
+            visibility: hidden;
+        }
+
+        .stats {
+            margin-top: 10px;
+        }
+
+        input[type="file"] {
+            margin-top: 10px;
+            color: white;
+        }
+    </style>
+</head>
+
+<body>
+
+<div id="game-header">
+    <!--h1>Find Your Element</h1-->
+
+    <!--input type="file" id="excelInput" accept=".xlsx,.xls"-->
+
+    <div id="target-display">Please upload elements.xlsx</div>
+
+    <div id="timer-bar"><div id="timer-progress"></div></div>
+
+    <div class="stats">
+        Score: <span id="score">0</span>
+    </div>
+</div>
+
+<div class="table-wrapper">
+    <div class="table-container">
+        <div class="periodic-table" id="grid"></div>
+    </div>
+</div>
+
+
+<script>
+    let elements = [];
+    let remainingPool = [];
+    let currentElement = null;
+    let timer = 30;
+    let interval = null;
+    let score = 0;
+
+    const grid = document.getElementById('grid');
+    const targetDisplay = document.getElementById('target-display');
+    const timerProgress = document.getElementById('timer-progress');
+    const scoreDisplay = document.getElementById('score');
+
+    function showFatalError(message) {
+        targetDisplay.innerHTML = `❌ ${message}`;
+        targetDisplay.style.borderColor = 'var(--wrong)';
+        timerProgress.style.width = '0%';
+        clearInterval(interval);
+        throw new Error(message);
+    }
+
+    async function loadElementsFromExcel() {
+        let response;
+
+        try {
+            response = await fetch('elements.xlsx', { cache: 'no-store' });
+        } catch (err) {
+            showFatalError('Failed to fetch elements.xlsx');
+        }
+
+        if (!response.ok) {
+            showFatalError('elements.xlsx not found next to HTML file');
+        }
+
+        const data = await response.arrayBuffer();
+        const workbook = XLSX.read(data, { type: 'array' });
+
+        if (!workbook.SheetNames.length) {
+            showFatalError('Excel file has no sheets');
+        }
+
+        const sheet = workbook.Sheets[workbook.SheetNames[0]];
+        const rows = XLSX.utils.sheet_to_json(sheet);
+
+        if (!rows.length) {
+            showFatalError('Excel sheet is empty');
+        }
+
+        const required = ['Name', 'Symbol', 'AtomicNumber', 'Row', 'Column'];
+        const missing = required.filter(col => !(col in rows[0]));
+
+        if (missing.length) {
+            showFatalError(`Missing columns: ${missing.join(', ')}`);
+        }
+
+        elements = rows.map(r => ({
+            n: r.Name,
+            s: r.Symbol,
+            z: Number(r.AtomicNumber),
+            r: Number(r.Row),
+            c: Number(r.Column)
+        })).filter(e =>
+            e.n && e.s &&
+            !isNaN(e.z) &&
+            !isNaN(e.r) &&
+            !isNaN(e.c)
+        );
+
+        if (!elements.length) {
+            showFatalError('No valid element data found');
+        }
+
+        remainingPool = [...elements];
+    }
+
+    function initGrid() {
+        grid.innerHTML = '';
+        for (let row = 1; row <= 10; row++) {
+            for (let col = 1; col <= 18; col++) {
+                const el = elements.find(e => e.r === row && e.c === col);
+                const cell = document.createElement('div');
+
+                if (el) {
+                    cell.className = 'element-cell';
+                     cell.innerHTML = `
+                        <div class="atomic">${el.z}</div>
+                        <div class="symbol"></div>
+                        <div class="name"></div>
+                        <div class="category"></div>
+                    `;
+                    cell.onclick = () => handleGuess(el, cell);
+                } else {
+                    cell.className = 'element-cell empty';
+                }
+
+                grid.appendChild(cell);
+            }
+        }
+        setTimeout(scaleTableToFit, 0);
+
+    }
+
+    function nextMove() {
+        if (!remainingPool.length) {
+            targetDisplay.innerHTML = '🏆 CHALLENGE COMPLETE!';
+            clearInterval(interval);
+            return;
+        }
+
+        currentElement =
+            remainingPool[Math.floor(Math.random() * remainingPool.length)];
+
+        targetDisplay.innerHTML =
+            `Find: <strong>${currentElement.n}</strong>
+             (Symbol: ${currentElement.s}, Atomic #: ${currentElement.z})`;
+
+        startTimer();
+    }
+
+    function startTimer() {
+        clearInterval(interval);
+        timer = 30;
+        interval = setInterval(() => {
+            timer -= 0.1;
+            timerProgress.style.width = (timer / 30) * 100 + '%';
+            if (timer <= 0) {
+                clearInterval(interval);
+                nextMove();
+            }
+        }, 100);
+    }
+
+    function handleGuess(el, cell) {
+        if (cell.classList.contains('found')) return;
+
+        if (el.z === currentElement.z) {
+            cell.classList.add('found');
+            cell.querySelector('.symbol').innerText = el.s;
+            cell.querySelector('.name').innerText = el.n;
+            cell.querySelector('.category').innerText = el.cat;
+            //cell.innerText = el.s;
+            score++;
+            scoreDisplay.innerText = score;
+            remainingPool = remainingPool.filter(e => e.z !== el.z);
+            nextMove();
+        } else {
+            cell.style.background = 'var(--wrong)';
+            //setTimeout(() => cell.style.background = '', 300);
+            setTimeout(() => {
+                if (!cell.classList.contains('found'))
+                    cell.style.backgroundColor = '';
+            }, 300);
+        }
+    }
+
+    function scaleTableToFit() {
+        const wrapper = document.querySelector('.table-wrapper');
+        const table = document.querySelector('.table-container');
+
+        if (!wrapper || !table) return;
+
+        const availableHeight = wrapper.clientHeight;
+        const tableHeight = table.scrollHeight;
+
+        const scale = Math.min(1, availableHeight / tableHeight);
+
+        table.style.transform = `scale(${scale})`;
+    }
+
+    window.addEventListener('resize', scaleTableToFit);
+
+
+    (async function startGame() {
+        try {
+            await loadElementsFromExcel();
+            initGrid();
+            nextMove();
+        } catch {
+            // Fatal error already displayed
+        }
+    })();
+</script>
+
+
+</body>
+</html>
