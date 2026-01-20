@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Color Slide Puzzle</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<style>
+    :root {
+        --bg: #0f172a;
+        --panel: #111827;
+    }
+
+    html, body {
+        height: 100%;
+        margin: 0;
+    }
+
+    body {
+        background: var(--bg);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-family: system-ui, sans-serif;
+    }
+
+    .app {
+        background: var(--panel);
+        padding: 20px;
+        border-radius: 12px;
+    }
+
+    .grid {
+        display: grid;
+        grid-template-columns: repeat(4, 70px);
+        grid-template-rows: repeat(4, 70px);
+        gap: 8px;
+    }
+
+    .cell {
+        border-radius: 8px;
+        cursor: pointer;
+        transition: transform 0.15s;
+    }
+
+    .cell:hover {
+        transform: scale(1.05);
+    }
+
+    .blank {
+        background: transparent;
+        cursor: default;
+    }
+
+    .r { background: #ef4444; }
+    .g { background: #22c55e; }
+    .b { background: #3b82f6; }
+    .y { background: #eab308; }
+</style>
+</head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Sudoku</title>
+<!--link rel="stylesheet" href="./sudoku/sudoku.css"-->
+<link rel="icon" type="image/x-icon" href="favicon.ico">
+<link href='https://fonts.googleapis.com/css?family=DM Sans' rel='stylesheet'>
+
+<body>
+<h1 style="color:white">Slidoku</h1>
+
+<div>
+    <script src="./navbar_b.js"></script>
+</div>
+<div class="app">
+    <div class="grid" id="grid"></div>
+</div>
+<div>
+    <h2 style="color:white; font-size:20px">Slide the tiles till each row and column have unique colors</h1>
+</div>
+
+<script>
+    const SIZE = 4;
+
+    function generateRandomBoard() {
+        const tiles = [
+            "r","r","r","r",
+            "g","g","g","g",
+            "b","b","b","b",
+            "y","y","y",
+            null
+        ];
+
+        // Fisher–Yates shuffle
+        for (let i = tiles.length - 1; i > 0; i--) {
+            const j = Math.floor(Math.random() * (i + 1));
+            [tiles[i], tiles[j]] = [tiles[j], tiles[i]];
+        }
+
+        return tiles;
+    }
+
+    let board = generateRandomBoard();
+
+
+    const grid = document.getElementById("grid");
+
+    function render() {
+        grid.innerHTML = "";
+        board.forEach((val, i) => {
+            const cell = document.createElement("div");
+            cell.className = "cell";
+
+            if (val === null) {
+                cell.classList.add("blank");
+            } else {
+                cell.classList.add(val);
+                cell.onclick = () => tryMove(i);
+            }
+
+            grid.appendChild(cell);
+        });
+    }
+
+    function tryMove(index) {
+        const blankIndex = board.indexOf(null);
+
+        const r1 = Math.floor(index / SIZE);
+        const c1 = index % SIZE;
+        const r2 = Math.floor(blankIndex / SIZE);
+        const c2 = blankIndex % SIZE;
+
+        const isAdjacent =
+            (Math.abs(r1 - r2) + Math.abs(c1 - c2)) === 1;
+
+        if (!isAdjacent) return;
+
+        // swap
+        [board[index], board[blankIndex]] =
+        [board[blankIndex], board[index]];
+
+        render();
+    }
+
+    render();
+</script>
+</body>
+</html>
