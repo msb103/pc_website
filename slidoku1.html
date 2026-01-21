@@ -1,0 +1,611 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Slidoku</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<style>
+:root {
+  --bg: #0f172a;
+  --panel: #111827;
+}
+
+html, body {
+  height: 100%;
+  margin: 0;
+}
+
+body {
+  background: var(--bg);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  font-family: system-ui, sans-serif;
+  color: white;
+}
+
+h1 { margin-bottom: 10px; }
+
+.controls {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 12px;
+  flex-wrap: wrap;
+}
+
+select, button {
+  padding: 6px 10px;
+  border-radius: 6px;
+  border: none;
+  cursor: pointer;
+}
+
+button {
+  background: #334155;
+  color: white;
+}
+
+.app {
+  background: var(--panel);
+  padding: 20px;
+  border-radius: 12px;
+}
+
+.grid {
+  display: grid;
+  gap: 8px;
+  transition: transform 0.5s ease;
+}
+
+.cell {
+  width: 70px;
+  height: 70px;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: transform 0.15s;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 700;
+  transition: transform 0.25s ease;
+  touch-action: none;
+}
+
+.cell:hover { transform: scale(1.05); }
+
+.blank {
+  background: transparent;
+  cursor: default;
+}
+
+.done {
+  background: #eab308;
+  color: black;
+  cursor: default;
+  font-size: 14px;
+}
+
+/* COLORS */
+.c0 { background:#ef4444; }
+.c1 { background:#22c55e; }
+.c2 { background:#3b82f6; }
+.c3 { background:#a855f7; }
+.cY { background:#eab308; } /* yellow */
+</style>
+</head>
+
+<body>
+
+<h1>Slidoku</h1>
+
+<div class="controls">
+  <select id="sizeSelect">
+    <option value="3">3 × 3</option>
+    <option value="4" selected>4 × 4</option>
+    <option value="5">5 × 5</option>
+  </select>
+
+  <select id="difficultySelect">
+    <option value="1">Normal</option>
+    <option value="2">Rotate Every Minute</option>
+    <option value="3">Advanced (4×4 only)</option>
+  </select>
+
+  <button id="restartBtn">Restart</button>
+</div>
+
+<div class="app">
+  <div class="grid" id="grid"></div>
+</div>
+
+<p>Slide tiles so rows and columns obey the color rules.</p>
+
+<script>
+let SIZE = 4;
+let board = [];
+let gameOver = false;
+let rotationTimer = null;
+let rotation = 0;
+let difficulty = "normal"; // "normal" | "rotate" | "corners"
+
+const grid = document.getElementById("grid");
+const sizeSelect = document.getElementById("sizeSelect");
+const difficultySelect = document.getElementById("difficultySelect");
+const restartBtn = document.getElementById("restartBtn");
+
+difficultySelect.addEventListener("change", () => {
+  difficulty = difficultySelect.value;
+
+  // IMPORTANT: do NOT touch board here
+  // Only re-evaluate win condition
+  if (!gameOver && checkWin()) {
+    endGame();
+  }
+});
+
+/* ---------- BOARD GENERATION ---------- */
+
+function generateBoard(size) {
+  const tiles = [];
+
+  const nonYellow = ["c0","c1","c2","c3","c4"].slice(0, size - 1);
+
+  nonYellow.forEach(c => {
+    for (let i = 0; i < size; i++) tiles.push(c);
+  });
+
+  for (let i = 0; i < size - 1; i++) tiles.push("cY");
+
+  tiles.push(null);
+  return shuffle(tiles);
+}
+
+function shuffle(arr) {
+  for (let i = arr.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [arr[i], arr[j]] = [arr[j], arr[i]];
+  }
+  return arr;
+}
+
+/* ---------- START ---------- */
+
+function startGame() {
+  SIZE = Number(sizeSelect.value);
+  board = generateBoard(SIZE);
+  gameOver = false;
+  rotation = 0;
+
+  grid.style.transform = "rotate(0deg)";
+  grid.style.gridTemplateColumns = `repeat(${SIZE}, 70px)`;
+  grid.style.gridTemplateRows = `repeat(${SIZE}, 70px)`;
+
+  clearInterval(rotationTimer);
+  if (difficultySelect.value === "2") {
+    rotationTimer = setInterval(() => {
+      rotation += 90;
+      grid.style.transform = `rotate(${rotation}deg)`;
+    }, 60000);
+  }
+
+  render();
+}
+
+/* ---------- RENDER ---------- */
+
+function render() {
+  grid.innerHTML = "";
+
+  board.forEach((val, i) => {
+    const cell = document.createElement("div");
+    cell.className = "cell";
+
+    if (val === null) {
+      cell.classList.add("blank");
+    } 
+    else if (val === "done") {
+      cell.classList.add("done");
+      cell.textContent = "Well Done";
+    } 
+    else if (val === "y_done") {
+        cell.style.background = "#eab308";
+        cell.textContent = "Well Done";
+        cell.style.display = "flex";
+        cell.style.alignItems = "center";
+        cell.style.justifyContent = "center";
+        cell.style.fontWeight = "600";
+        cell.style.color = "#000";
+        cell.style.cursor = "default";
+    }
+
+    else {
+      cell.classList.add(val);
+      cell.dataset.index = i;
+      cell.onclick = () => tryMove(i);
+      addSwipe(cell, i);
+    }
+    grid.appendChild(cell);
+  });
+}
+
+/* ---------- MOVE ---------- */
+
+function tryMove1(index) {
+  if (gameOver) return;
+
+  const blank = board.indexOf(null);
+  if (!isAdjacent(index, blank)) return;
+
+  animateSwap(index, blank);
+}
+
+function tryMove(index) {
+  const blankIndex = board.indexOf(null);
+
+  const r1 = Math.floor(index / SIZE);
+  const c1 = index % SIZE;
+  const r2 = Math.floor(blankIndex / SIZE);
+  const c2 = blankIndex % SIZE;
+
+  if (Math.abs(r1 - r2) + Math.abs(c1 - c2) !== 1) return;
+
+  [board[index], board[blankIndex]] = [board[blankIndex], board[index]];
+  render();
+
+  if (checkWin()) {
+    endGame();
+  }
+}
+
+function isAdjacent(a, b) {
+  const r1 = Math.floor(a / SIZE), c1 = a % SIZE;
+  const r2 = Math.floor(b / SIZE), c2 = b % SIZE;
+  return Math.abs(r1 - r2) + Math.abs(c1 - c2) === 1;
+}
+
+function animateSwap(i1, i2) {
+  const cells = [...grid.children];
+  const c1 = cells[i1];
+  const c2 = cells[i2];
+
+  const dx = (i2 % SIZE - i1 % SIZE) * 78;
+  const dy = (Math.floor(i2 / SIZE) - Math.floor(i1 / SIZE)) * 78;
+
+  c1.style.transform = `translate(${dx}px,${dy}px)`;
+  setTimeout(() => {
+    [board[i1], board[i2]] = [board[i2], board[i1]];
+    render();
+    if (checkWin()) endGame();
+  }, 250);
+}
+
+/* ---------- SWIPE SUPPORT ---------- */
+
+function addSwipe(el, index) {
+  let sx, sy;
+
+  el.addEventListener("touchstart", e => {
+    sx = e.touches[0].clientX;
+    sy = e.touches[0].clientY;
+  });
+
+  el.addEventListener("touchend", e => {
+    const dx = e.changedTouches[0].clientX - sx;
+    const dy = e.changedTouches[0].clientY - sy;
+
+    const blank = board.indexOf(null);
+    let target = null;
+
+    if (Math.abs(dx) > Math.abs(dy)) {
+      if (dx > 30) target = index - 1;
+      if (dx < -30) target = index + 1;
+    } else {
+      if (dy > 30) target = index - SIZE;
+      if (dy < -30) target = index + SIZE;
+    }
+
+    if (target === blank) tryMove(index);
+  });
+}
+
+/* ---------- WIN CHECK ---------- */
+
+/* function checkWin() {
+  if (board.includes(null)) return false;
+
+  for (let i = 0; i < SIZE; i++) {
+    if (!validLine(getRow(i))) return false;
+    if (!validLine(getCol(i))) return false;
+  }
+
+  if (difficultySelect.value === "3" && SIZE === 4) {
+    const blocks = [
+      [0,1,4,5],[2,3,6,7],
+      [8,9,12,13],[10,11,14,15]
+    ];
+    for (const b of blocks) {
+      if (new Set(b.map(i => board[i])).size !== 4) return false;
+    }
+  }
+
+  return true;
+}*/
+
+function validLine(arr) {
+  const seen = new Set();
+
+  for (const v of arr) {
+    if (v === null || v === "done") return false;
+    if (seen.has(v)) return false;
+    seen.add(v);
+  }
+
+  return true;
+}
+
+function checkWin() {
+  // Must satisfy base rule always
+  if (!checkRowsAndCols()) return false;
+
+  // Extra rule only in corners difficulty
+  if (difficulty === "corners") {
+    if (!checkCornerBlocks()) return false;
+  }
+
+  return true;
+}
+
+
+function checkRowsAndCols() {
+  // Check rows
+  for (let r = 0; r < SIZE; r++) {
+    const seen = new Set();
+    for (let c = 0; c < SIZE; c++) {
+      const val = board[r * SIZE + c];
+      if (val === null) continue;
+      if (seen.has(val)) return false;
+      seen.add(val);
+    }
+  }
+
+  // Check columns
+  for (let c = 0; c < SIZE; c++) {
+    const seen = new Set();
+    for (let r = 0; r < SIZE; r++) {
+      const val = board[r * SIZE + c];
+      if (val === null) continue;
+      if (seen.has(val)) return false;
+      seen.add(val);
+    }
+  }
+
+  return true;
+}
+
+function checkCornerBlocks() {
+  if (SIZE !== 4) return true;
+
+  const blocks = [
+    [0, 1, 4, 5],       // top-left
+    [2, 3, 6, 7],       // top-right
+    [8, 9, 12, 13],     // bottom-left
+    [10, 11, 14, 15]    // bottom-right
+  ];
+
+  for (const block of blocks) {
+    const seen = new Set();
+    for (const idx of block) {
+      const val = board[idx];
+      if (val === null) continue;
+      if (seen.has(val)) return false;
+      seen.add(val);
+    }
+  }
+
+  return true;
+}
+
+const getRow = r => board.slice(r * SIZE, r * SIZE + SIZE);
+const getCol = c => board.filter((_, i) => i % SIZE === c);
+
+/* ---------- END ---------- */
+
+function endGame1() {
+  gameOver = true;
+  board[board.indexOf(null)] = "done";
+  render();
+}
+
+function endGame() {
+  const blankIndex = board.indexOf(null);
+  board[blankIndex] = "y_done";
+  render();
+}
+
+
+/* ---------- EVENTS ---------- */
+
+sizeSelect.onchange = () => {
+  if (difficultySelect.value === "3" && sizeSelect.value !== "4") {
+    difficultySelect.value = "1";
+  }
+  startGame();
+};
+
+difficultySelect.onchange = startGame;
+restartBtn.onclick = startGame;
+
+function setDifficulty(newDifficulty) {
+  difficulty = newDifficulty;
+  console.log("Difficulty changed, board preserved");
+}
+
+
+startGame();
+</script>
+
+<!--script>
+let SIZE = 4;
+let board = [];
+let gameOver = false;
+let rotationTimer = null;
+let rotation = 0;
+
+const grid = document.getElementById("grid");
+const sizeSelect = document.getElementById("sizeSelect");
+const difficultySelect = document.getElementById("difficultySelect");
+const restartBtn = document.getElementById("restartBtn");
+
+/* ---------- BOARD GENERATION (FIXED) ---------- */
+
+function generateBoard(size) {
+  const total = size * size;
+  const tiles = [];
+
+  // Non-yellow colors
+  const nonYellowColors = ["c0","c1","c2","c3"].slice(0, size - 1);
+
+  nonYellowColors.forEach(c => {
+    for (let i = 0; i < size; i++) tiles.push(c);
+  });
+
+  // Yellow tiles = size - 1
+  for (let i = 0; i < size - 1; i++) tiles.push("cY");
+
+  // Blank
+  tiles.push(null);
+
+  return shuffle(tiles);
+}
+
+function shuffle(arr) {
+  for (let i = arr.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [arr[i], arr[j]] = [arr[j], arr[i]];
+  }
+  return arr;
+}
+
+/* ---------- START ---------- */
+
+function startGame() {
+  SIZE = Number(sizeSelect.value);
+  board = generateBoard(SIZE);
+  gameOver = false;
+  rotation = 0;
+
+  grid.style.transform = "rotate(0deg)";
+  grid.style.gridTemplateColumns = `repeat(${SIZE}, 70px)`;
+  grid.style.gridTemplateRows = `repeat(${SIZE}, 70px)`;
+
+  clearInterval(rotationTimer);
+  if (difficultySelect.value === "2") {
+    rotationTimer = setInterval(() => {
+      rotation += 90;
+      grid.style.transform = `rotate(${rotation}deg)`;
+    }, 60000);
+  }
+
+  render();
+}
+
+/* ---------- RENDER ---------- */
+
+function render() {
+  grid.innerHTML = "";
+  board.forEach((val, i) => {
+    const cell = document.createElement("div");
+    cell.className = "cell";
+
+    if (val === null) {
+      cell.classList.add("blank");
+    } else if (val === "done") {
+      cell.classList.add("done");
+      cell.textContent = "Well Done";
+    } else {
+      cell.classList.add(val);
+      cell.onclick = () => tryMove(i);
+    }
+    grid.appendChild(cell);
+  });
+}
+
+/* ---------- MOVE ---------- */
+
+function tryMove(index) {
+  if (gameOver) return;
+
+  const blank = board.indexOf(null);
+  const r1 = Math.floor(index / SIZE);
+  const c1 = index % SIZE;
+  const r2 = Math.floor(blank / SIZE);
+  const c2 = blank % SIZE;
+
+  if (Math.abs(r1 - r2) + Math.abs(c1 - c2) !== 1) return;
+
+  [board[index], board[blank]] = [board[blank], board[index]];
+  render();
+
+  if (checkWin()) endGame();
+}
+
+/* ---------- RULES ---------- */
+
+function checkWin() {
+  if (board.includes(null)) return false;
+
+  for (let i = 0; i < SIZE; i++) {
+    if (!checkLine(getRow(i)) || !checkLine(getCol(i))) return false;
+  }
+
+  if (difficultySelect.value === "3" && SIZE === 4) {
+    const corners = [
+      [0,1,4,5],[2,3,6,7],[8,9,12,13],[10,11,14,15]
+    ];
+    for (const c of corners) {
+      if (new Set(c.map(i => board[i])).size !== 4) return false;
+    }
+  }
+  return true;
+}
+
+function checkLine(arr) {
+  const count = {};
+  for (const v of arr) {
+    count[v] = (count[v] || 0) + 1;
+    if (count[v] > 2) return false;
+  }
+  return true;
+}
+
+const getRow = r => board.slice(r * SIZE, r * SIZE + SIZE);
+const getCol = c => board.filter((_, i) => i % SIZE === c);
+
+/* ---------- END ---------- */
+
+function endGame() {
+  gameOver = true;
+  const blank = board.indexOf(null);
+  board[blank] = "done";
+  render();
+}
+
+/* ---------- EVENTS ---------- */
+
+sizeSelect.onchange = () => {
+  if (difficultySelect.value === "3" && sizeSelect.value !== "4") {
+    difficultySelect.value = "1";
+  }
+  startGame();
+};
+
+difficultySelect.onchange = startGame;
+restartBtn.onclick = startGame;
+
+startGame();
+</script-->
+
+</body>
+</html>
