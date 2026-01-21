@@ -14,33 +14,63 @@
   --wrong:#fb7185;
 }
 
+* {
+  box-sizing: border-box;
+}
+
 html,body{
-  margin:0;height:100%;
+  margin:0;
+  height:100%;
+  width:100%;
   background:var(--bg);
   font-family:system-ui,sans-serif;
   color:var(--text);
   display:flex;justify-content:center;align-items:center;
+  overflow:hidden;
 }
 
 .app{
-  width:440px;
+  width:100%;
   padding:16px;
   background:var(--panel);
   border-radius:14px;
 }
 
 /* HEADER */
-.header{text-align:center;margin-bottom:8px;}
-.timer{height:6px;background:#334155;border-radius:4px;overflow:hidden;}
-.timer-bar{height:100%;width:100%;background:var(--accent);}
-.stats{display:flex;justify-content:space-between;font-size:.9rem;margin-top:6px;}
+.header{
+    text-align:center;
+    margin-bottom:8px;
+    width:80%;
+    justify-self:center;
+    justify-content:center;
+}
+
+.timer{
+    height:6px;background:#334155;
+    border-radius:4px;overflow:hidden;
+}
+
+.timer-bar{
+    height:100%;
+    width:100%;
+    background:var(--accent);
+}
+
+.stats{
+    display:flex;
+    justify-content:space-between;
+    font-size:.9rem;
+    margin-top:6px;
+}
 
 /* LEGEND */
 .legend{
   display:flex;
-  justify-content:space-around;
+  justify-content:space-between;
   margin-top:10px;
   font-size:0.75rem;
+  max-width:100%;
+  
 }
 .legend-item{
   display:flex;
@@ -54,8 +84,10 @@ html,body{
 
 /* ATOM */
 .atom{
-  width:360px;height:360px;
-  position:relative;margin:12px auto;
+  width:360px;
+  height:360px;
+  position:relative;
+  margin:12px auto;
 }
 
 /* SHELL */
@@ -99,6 +131,7 @@ html,body{
   background:white;border-radius:50%;
   margin:1px;
 }
+
 </style>
 </head>
 
@@ -116,16 +149,16 @@ html,body{
     <!-- LEGEND -->
     <div class="legend">
       <div class="legend-item">
-        <div class="legend-dot legend-s"></div> S (1 tile / 2e⁻)
+        <div class="legend-dot legend-s"></div> S (2e⁻)
       </div>
       <div class="legend-item">
-        <div class="legend-dot legend-p"></div> P (3 tiles / 6e⁻)
+        <div class="legend-dot legend-p"></div> P (6e⁻)
       </div>
       <div class="legend-item">
-        <div class="legend-dot legend-d"></div> D (5 tiles / 10e⁻)
+        <div class="legend-dot legend-d"></div> D (10e⁻)
       </div>
       <div class="legend-item">
-        <div class="legend-dot legend-f"></div> F (7 tiles / 14e⁻)
+        <div class="legend-dot legend-f"></div> F (14e⁻)
       </div>
     </div>
   </div>
@@ -137,7 +170,7 @@ html,body{
 <script src="https://cdn.jsdelivr.net/npm/xlsx/dist/xlsx.full.min.js"></script>
 <script>
 /* ================= CONFIG ================= */
-const MAX_ATOMIC_NUMBER = 10; // 👈 change difficulty here
+const MAX_ATOMIC_NUMBER = 40; // 👈 change difficulty here
 
 /* ================= CONSTANTS ================= */
 const orbitalOrder=[
@@ -158,6 +191,9 @@ let timerInterval;
 let elements = [];   // populated from elements.xlsx
 let elementsLoaded = false;
 
+let baseTime=10;
+let deltaTime=2;
+
 /* ================= DOM ================= */
 const atom=document.getElementById("atom");
 const scoreEl=document.getElementById("score");
@@ -177,6 +213,9 @@ function getOrbitalsForAtomicNumber(Z){
 }
 
 function createAtom() {
+
+    timeLeft=baseTime+atomicNumber*deltaTime;
+    //console.log("set time at start of createAtom");
   atom.innerHTML = "";
   const shells = {};
 
@@ -244,6 +283,14 @@ function endRound(reason) {
   clearInterval(timerInterval);
   if (reason === 'success') {
     elementInfo.textContent=`SUCCESS... Loading Next Element`;
+    //console.log("Success", {timeLeft}, "-" ,{timerInterval});
+    
+  }
+
+  if (reason === 'timeout') {
+    elementInfo.textContent=`TIMEOUT... Loading Next Element`;
+    //console.log("Time Out" , {timeLeft}, "-" ,{timerInterval});
+    
   }
 
   setTimeout(() => {
@@ -322,14 +369,15 @@ function wrong(tile){
 
 /* ================= TIMER ================= */
 function startTimer(){
+    //console.log("set time at startTimer");
   const max=timeLeft;
   timerInterval=setInterval(()=>{
     timeLeft-=0.1;
     timerBar.style.width=`${(timeLeft/max)*100}%`;
     if(timeLeft<=0){ 
         clearInterval(timerInterval);
-        endround("timeout");
-        loadNewAtom();
+        endRound("timeout");
+        //loadNewAtom();
     }
   },100);
 }
@@ -401,7 +449,7 @@ function pickRandomElement() {
   try{
     await loadElement();
     activeOrbitals=getOrbitalsForAtomicNumber(atomicNumber);
-    timeLeft=20+atomicNumber*1.2;
+    //timeLeft=20+atomicNumber*1.2;
     createAtom();
     startTimer();
   }catch{
