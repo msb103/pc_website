@@ -142,52 +142,10 @@ html,body{
   margin:1px;
 }
 
-.quantum .electron {
-  background: radial-gradient(
-    circle,
-    rgba(255,255,255,0.9),
-    rgba(255,255,255,0.1)
-  );
-  filter: blur(2px);
-}
-
-@keyframes electronDrift {
-  0% { transform: translate(0,0); }
-  50% { transform: translate(2px,-2px); }
-  100% { transform: translate(0,0); }
-}
-
-.quantum .electron {
-  animation: electronDrift 2s ease-in-out infinite;
-}
-
 @keyframes rotateOrbit {
   from { transform: rotate(0deg); }
   to   { transform: rotate(360deg); }
 }
-
-.quantum-cloud {
-  position: absolute;
-  inset: 0;
-  border-radius: 50%;
-  pointer-events: none;
-  filter: blur(14px);
-  opacity: 0.55;
-  mix-blend-mode: screen;
-  animation: cloudPulse 4s ease-in-out infinite;
-}
-
-@keyframes cloudPulse {
-  0%, 100% { opacity: 0.45; }
-  50% { opacity: 0.75; }
-}
-
-.quantum .orbital {
-  filter: blur(4px);
-  opacity: 0.7;
-}
-
-
 
 </style>
 </head>
@@ -221,8 +179,7 @@ html,body{
   </div>
 
   <div class="atom" id="atom"></div>
-  <div class="header"> Each rotating circle houses an electron pair. Select the circles to populate the electrons in the correct order </div>
-  
+  <h4>each circle houses 2 electrons. select the circles to populate the electrons in the correct order</h4>
 
 </div>
 
@@ -248,14 +205,6 @@ const shellAngularVelocity = {
   7: 1
 };
 
-const orbitalCloudColor = {
-  s: "rgba(34,197,94,0.6)",   // green
-  p: "rgba(59,130,246,0.6)",  // blue
-  d: "rgba(168,85,247,0.6)",  // purple
-  f: "rgba(251,191,36,0.6)"   // amber
-};
-
-
 
 /* ================= STATE ================= */
 let atomicNumber=0;
@@ -265,7 +214,6 @@ let electronsPlaced=0;
 let score=0;
 let timeLeft=0;
 let timerInterval;
-let quantumMode = false;
 
 let elements = [];   // populated from elements.xlsx
 let elementsLoaded = false;
@@ -279,8 +227,6 @@ const scoreEl=document.getElementById("score");
 const placedEl=document.getElementById("placed");
 const timerBar=document.getElementById("timerBar");
 const elementInfo=document.getElementById("elementInfo");
-document.body.classList.toggle("quantum", quantumMode);
-
 
 /* ================= LOGIC ================= */
 function getOrbitalsForAtomicNumber(Z){
@@ -315,22 +261,6 @@ function createAtom() {
     shell.className = "shell";
     const r = step * (i + 1);
     shell.style.inset = `${180 - r}px`;
-
-    if (quantumMode) {
-        const cloud = document.createElement("div");
-        cloud.className = "quantum-cloud";
-
-        // Blend all orbital types in that shell
-        const colors = shells[n]
-            .map(o => orbitalCloudColor[o.slice(-1)])
-            .join(",");
-
-        cloud.style.background =
-            `radial-gradient(circle, ${colors})`;
-
-        shell.appendChild(cloud);
-        }
-
 
     /* 🟢 ROTATION APPLIED HERE */
     const speed = shellAngularVelocity[n] || 2;
@@ -444,7 +374,6 @@ function placeElectron(tile){
 
   if (electronsPlaced === atomicNumber) {
     endRound("success");
-    collapseWaveFunction();
     //loadNewAtom();
     }
 }
@@ -456,44 +385,19 @@ function isOrbitalFull(){
 }
 
 function highlightActive(){
-  document.querySelectorAll(".orbital").forEach(o => {
-    o.classList.remove("active");
-    if (quantumMode) {
-      o.style.filter = "blur(4px)";
-      o.style.opacity = "0.6";
-    }
-  });
+  document.querySelectorAll(".orbital").forEach(o=>o.classList.remove("active"));
   const key=activeOrbitals[currentOrbitalIndex];
   if(!key) return;
   document.querySelectorAll(`.orbital[data-orbital="${key}"]`)
-    .forEach(o=>{o.classList.add("active")
-        o.classList.add("active");
-        o.style.filter = "none";
-        o.style.opacity = "1";
-    });
+    .forEach(o=>o.classList.add("active"));
 }
 
 function wrong(tile){
   score=Math.max(0,score-1);
   scoreEl.textContent=score;
   tile.classList.add("wrong");
-
-  if (quantumMode) {
-    tile.style.filter = "blur(8px)";
-    tile.style.opacity = "0.4";
-  }
-
-  setTimeout(()=>{
-    tile.classList.remove("wrong");
-    tile.style.filter = "";
-    tile.style.opacity = "";
-    },300);
+  setTimeout(()=>tile.classList.remove("wrong"),300);
 }
-
-function collapseWaveFunction() {
-  document.body.classList.remove("quantum");
-}
-
 
 /* ================= TIMER ================= */
 function startTimer(){
