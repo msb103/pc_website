@@ -1,0 +1,413 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Electron Configuration Puzzle</title>
+
+<style>
+:root {
+  --bg:#0f172a;
+  --panel:#111827;
+  --text:#e5e7eb;
+  --accent:#22c55e;
+  --wrong:#fb7185;
+}
+
+html,body{
+  margin:0;height:100%;
+  background:var(--bg);
+  font-family:system-ui,sans-serif;
+  color:var(--text);
+  display:flex;justify-content:center;align-items:center;
+}
+
+.app{
+  width:440px;
+  padding:16px;
+  background:var(--panel);
+  border-radius:14px;
+}
+
+/* HEADER */
+.header{text-align:center;margin-bottom:8px;}
+.timer{height:6px;background:#334155;border-radius:4px;overflow:hidden;}
+.timer-bar{height:100%;width:100%;background:var(--accent);}
+.stats{display:flex;justify-content:space-between;font-size:.9rem;margin-top:6px;}
+
+/* LEGEND */
+.legend{
+  display:flex;
+  justify-content:space-around;
+  margin-top:10px;
+  font-size:0.75rem;
+}
+.legend-item{
+  display:flex;
+  align-items:center;
+  gap:6px;
+}
+.legend-dot{
+  width:14px;height:14px;border-radius:50%;
+  border:2px solid;
+}
+
+/* ATOM */
+.atom{
+  width:360px;height:360px;
+  position:relative;margin:12px auto;
+}
+
+/* SHELL */
+.shell{
+  position:absolute;
+  border:1px dashed #475569;
+  border-radius:50%;
+  inset:0;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  pointer-events:none;
+}
+
+/* ORBITAL */
+.orbital{
+  position:absolute;
+  width:26px;height:26px;
+  border-radius:50%;
+  border:2px solid;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  cursor:pointer;
+  pointer-events:auto;
+  transition:box-shadow .15s,transform .15s;
+}
+.orbital.active{box-shadow:0 0 10px currentColor;}
+.orbital.filled{background:currentColor;}
+.orbital.wrong{box-shadow:0 0 12px var(--wrong);}
+
+/* ORBITAL COLORS */
+.orbital.s,.legend-s{color:#38bdf8;background:#020617;}
+.orbital.p,.legend-p{color:#22c55e;background:#020617;}
+.orbital.d,.legend-d{color:#f59e0b;background:#020617;}
+.orbital.f,.legend-f{color:#a855f7;background:#020617;}
+
+/* ELECTRONS */
+.electron{
+  width:6px;height:6px;
+  background:white;border-radius:50%;
+  margin:1px;
+}
+</style>
+</head>
+
+<body>
+<div class="app">
+
+  <div class="header">
+    <div id="elementInfo">Loading element…</div>
+    <div class="timer"><div class="timer-bar" id="timerBar"></div></div>
+    <div class="stats">
+      <div>Score: <span id="score">0</span></div>
+      <div>Electrons: <span id="placed">0</span></div>
+    </div>
+
+    <!-- LEGEND -->
+    <div class="legend">
+      <div class="legend-item">
+        <div class="legend-dot legend-s"></div> S (1 tile / 2e⁻)
+      </div>
+      <div class="legend-item">
+        <div class="legend-dot legend-p"></div> P (3 tiles / 6e⁻)
+      </div>
+      <div class="legend-item">
+        <div class="legend-dot legend-d"></div> D (5 tiles / 10e⁻)
+      </div>
+      <div class="legend-item">
+        <div class="legend-dot legend-f"></div> F (7 tiles / 14e⁻)
+      </div>
+    </div>
+  </div>
+
+  <div class="atom" id="atom"></div>
+
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/xlsx/dist/xlsx.full.min.js"></script>
+<script>
+/* ================= CONFIG ================= */
+const MAX_ATOMIC_NUMBER = 10; // 👈 change difficulty here
+
+/* ================= CONSTANTS ================= */
+const orbitalOrder=[
+  "1s","2s","2p","3s","3p","4s","3d","4p",
+  "5s","4d","5p","6s","4f","5d","6p","7s"
+];
+const orbitalTiles={s:1,p:3,d:5,f:7};
+
+/* ================= STATE ================= */
+let atomicNumber=0;
+let activeOrbitals=[];
+let currentOrbitalIndex=0;
+let electronsPlaced=0;
+let score=0;
+let timeLeft=0;
+let timerInterval;
+
+let elements = [];   // populated from elements.xlsx
+let elementsLoaded = false;
+
+/* ================= DOM ================= */
+const atom=document.getElementById("atom");
+const scoreEl=document.getElementById("score");
+const placedEl=document.getElementById("placed");
+const timerBar=document.getElementById("timerBar");
+const elementInfo=document.getElementById("elementInfo");
+
+/* ================= LOGIC ================= */
+function getOrbitalsForAtomicNumber(Z){
+  let count=0,result=[];
+  for(const key of orbitalOrder){
+    count+=orbitalTiles[key.slice(-1)]*2;
+    result.push(key);
+    if(count>=Z) break;
+  }
+  return result;
+}
+
+function createAtom() {
+  atom.innerHTML = "";
+  const shells = {};
+
+  // Group orbitals by shell number
+  activeOrbitals.forEach(o => {
+    const n = o[0];
+    if (!shells[n]) shells[n] = [];
+    shells[n].push(o);
+  });
+
+  const shellKeys = Object.keys(shells);
+  const step = 150 / shellKeys.length;
+
+  shellKeys.forEach((n, i) => {
+    const shell = document.createElement("div");
+    shell.className = "shell";
+    const r = step * (i + 1);
+    shell.style.inset = `${180 - r}px`;
+
+    /* -------- FIX STARTS HERE -------- */
+
+    // 1. Count TOTAL tiles in this shell
+    let totalTiles = 0;
+    shells[n].forEach(o => {
+      const type = o.slice(-1);
+      totalTiles += orbitalTiles[type];
+    });
+
+    // 2. One angle step for the entire shell
+    const angleStep = (Math.PI * 2) / totalTiles;
+    let tileIndex = 0;
+
+    // 3. Place tiles continuously
+    shells[n].forEach(o => {
+      const type = o.slice(-1);
+      const tiles = orbitalTiles[type];
+
+      for (let t = 0; t < tiles; t++) {
+        const tile = document.createElement("div");
+        tile.className = `orbital ${type}`;
+        tile.dataset.orbital = o;
+        tile.dataset.count = 0;
+
+        const angle = tileIndex * angleStep;
+
+        tile.style.transform =
+          `translate(${Math.cos(angle) * r}px, ${Math.sin(angle) * r}px)`;
+
+        tile.onclick = () => handleClick(tile);
+        shell.appendChild(tile);
+
+        tileIndex++; // ← critical
+      }
+    });
+
+    /* -------- FIX ENDS HERE -------- */
+
+    atom.appendChild(shell);
+  });
+
+  highlightActive();
+}
+
+function endRound(reason) {
+  clearInterval(timerInterval);
+  if (reason === 'success') {
+    elementInfo.textContent=`SUCCESS... Loading Next Element`;
+  }
+
+  setTimeout(() => {
+    loadNewAtom(); // reloads new element
+  }, 1200);
+}
+
+function violatesHundsRule(tile) {
+  const orbital = tile.dataset.orbital;
+
+  // Get all tiles of same orbital (e.g. 2p, 3d)
+  const group = [...document.querySelectorAll(
+    `.orbital[data-orbital="${orbital}"]`
+  )];
+
+  const emptyExists = group.some(t => Number(t.dataset.count) === 0);
+  const thisHasOne = Number(tile.dataset.count) === 1;
+
+  return thisHasOne && emptyExists;
+}
+
+
+
+function handleClick(tile){
+
+    
+    if (electronsPlaced >= atomicNumber) {
+    return;
+    }
+
+  const expected=activeOrbitals[currentOrbitalIndex];
+  if(tile.dataset.orbital!==expected){ wrong(tile); return; }
+  if(tile.dataset.count>=2) return;
+  // Hund's rule enforcement
+  if (violatesHundsRule(tile)) {
+    wrong(tile);
+    return;
+  }
+  placeElectron(tile);
+}
+
+function placeElectron(tile){
+  tile.appendChild(Object.assign(document.createElement("div"),{className:"electron"}));
+  tile.dataset.count++;
+  electronsPlaced++; score++;
+  scoreEl.textContent=score;
+  placedEl.textContent=electronsPlaced;
+  if(isOrbitalFull()){ currentOrbitalIndex++; highlightActive(); }
+
+  if (electronsPlaced === atomicNumber) {
+    endRound("success");
+    //loadNewAtom();
+    }
+}
+
+function isOrbitalFull(){
+  const key=activeOrbitals[currentOrbitalIndex];
+  return [...document.querySelectorAll(`.orbital[data-orbital="${key}"]`)]
+    .every(t=>t.dataset.count==2);
+}
+
+function highlightActive(){
+  document.querySelectorAll(".orbital").forEach(o=>o.classList.remove("active"));
+  const key=activeOrbitals[currentOrbitalIndex];
+  if(!key) return;
+  document.querySelectorAll(`.orbital[data-orbital="${key}"]`)
+    .forEach(o=>o.classList.add("active"));
+}
+
+function wrong(tile){
+  score=Math.max(0,score-1);
+  scoreEl.textContent=score;
+  tile.classList.add("wrong");
+  setTimeout(()=>tile.classList.remove("wrong"),300);
+}
+
+/* ================= TIMER ================= */
+function startTimer(){
+  const max=timeLeft;
+  timerInterval=setInterval(()=>{
+    timeLeft-=0.1;
+    timerBar.style.width=`${(timeLeft/max)*100}%`;
+    if(timeLeft<=0){ 
+        clearInterval(timerInterval);
+        endround("timeout");
+        loadNewAtom();
+    }
+  },100);
+}
+
+/* ================= EXCEL ================= */
+async function loadElement(){
+  const res=await fetch("elements.xlsx");
+  if(!res.ok) throw new Error("elements.xlsx not found");
+  const buf=await res.arrayBuffer();
+  const wb=XLSX.read(buf);
+  const rows=XLSX.utils.sheet_to_json(wb.Sheets[wb.SheetNames[0]]);
+
+  const filtered=rows.filter(r=>Number(r.AtomicNumber)<=MAX_ATOMIC_NUMBER);
+  const el=filtered[Math.floor(Math.random()*filtered.length)];
+
+  atomicNumber=Number(el.AtomicNumber);
+  elementInfo.textContent=`${el.Name} (${el.Symbol}) — Z = ${atomicNumber}`;
+
+  // Apply MAX_ATOMIC_NUMBER filter
+    elements = rows
+      .map(r => ({
+        Name: r.Name,
+        Symbol: r.Symbol,
+        AtomicNumber: Number(r.AtomicNumber)
+      }))
+      .filter(e => e.AtomicNumber > 0 && e.AtomicNumber <= MAX_ATOMIC_NUMBER);
+
+    elementsLoaded = true;
+}
+
+function loadNewAtom() {
+  // Reset state
+  clearInterval(timerInterval);
+
+  electronsPlaced = 0;
+  currentOrbitalIndex = 0;
+  score = Math.max(0, score); // keep score across rounds (or reset if you want)
+
+  placedEl.textContent = "0";
+
+  // Pick a new element
+  pickRandomElement();
+
+  // Recompute orbitals
+  activeOrbitals = getOrbitalsForAtomicNumber(atomicNumber);
+
+  // Rebuild UI
+  createAtom();
+
+  // Restart timer
+  startTimer();
+}
+
+function pickRandomElement() {
+  const eligible = elements.filter(e => e.AtomicNumber <= MAX_ATOMIC_NUMBER);
+  const el = eligible[Math.floor(Math.random() * eligible.length)];
+
+  atomicNumber = el.AtomicNumber;
+  elementName = el.Name;
+  elementSymbol = el.Symbol;
+
+  document.getElementById("elementInfo").textContent =
+    `${elementName} (${elementSymbol}) — Z = ${atomicNumber}`;
+}
+
+
+/* ================= START ================= */
+(async function(){
+  try{
+    await loadElement();
+    activeOrbitals=getOrbitalsForAtomicNumber(atomicNumber);
+    timeLeft=20+atomicNumber*1.2;
+    createAtom();
+    startTimer();
+  }catch{
+    elementInfo.textContent="⚠️ Failed to load elements.xlsx";
+  }
+})();
+</script>
+</body>
+</html>
